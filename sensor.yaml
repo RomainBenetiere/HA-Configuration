@@ -1,0 +1,38 @@
+- platform: template
+  sensors:
+    power_network:
+      friendly_name: "Puissance Reseau"
+      unique_id: puissres
+      device_class: "power"
+      unit_of_measurement: "kW"
+      value_template: "{{(states('sensor.envoy_122301074544_consommation_d_electricite_actuelle')|float - states('sensor.envoy_122301074544_production_d_electricite_actuelle')|float)}}"
+    color_hue:
+      friendly_name: "Teinte 360"
+      unique_id: huepuiss
+      device_class: "illuminance"
+      value_template: "{{(states('sensor.power_network')|float * -40 + 120)|int}}"
+    mwh_price:
+        friendly_name: "Prix du Mwh"
+        unique_id: mwhprice
+        unit_of_measurement: "€/MWh"
+        value_template: >
+          {% set now = now() %}
+          {% if (now.hour == 0 and now.minute >=54) or ( 0 < now.hour < 6) or (now.hour == 6 and now.minute< 54)%}
+            {{192.7 | float }}
+          {% elif (now.hour == 14 and now.minute >=54) or (now.hour==15) or (now.hour == 16 and now.minute< 54)%}
+            {{192.7 | float }}
+          {% else %}
+            {{279.5 | float }}
+          {% endif %}
+
+- platform: statistics
+  entity_id: sensor.power_network
+  state_characteristic: mean
+  name: Pui_Res_10m
+  max_age:
+    minutes: 10
+  precision: 2
+  unique_id: puissres10
+
+
+

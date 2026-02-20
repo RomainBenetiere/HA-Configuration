@@ -1,0 +1,19 @@
+- platform: template
+  sensors:
+    power_excess:
+      friendly_name: "surproduction_nrj"
+      delay_on:
+        minutes: 15
+      delay_off:
+        minutes: 0
+      value_template: "{{ states('sensor.Pui_Res_10m') | float < -2.0 }}"
+      unique_id: nrjplus
+
+    power_shortage:
+      friendly_name: "conso_nrj"
+      delay_on:
+        minutes: 10
+      delay_off:
+        minutes: 0
+      value_template: "{{ states('sensor.Pui_Res_10m') | float > 1 }}"
+      unique_id: nrjless

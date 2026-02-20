@@ -1,0 +1,49 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensor.yaml
+binary_sensor: !include bin_sensor.yaml
+input_boolean: !include input_boolean.yaml
+# switch: !include switches.yaml
+input_number: !include input_number.yaml
+statistics: statistics.yaml
+history_stats: history_stats.yaml
+filter: filter.yaml
+
+switch:
+  - platform: rfxtrx
+    automatic_add: false
+    devices:
+      0b11000100010101010100:
+        name: Prise_DIO_54885
+
+
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+api:
+
+alexa:
+  smart_home:
+    locale: fr-FR
+    endpoint: https://api.eu.amazonalexa.com/v3/events
+    client_id: amzn1.application-oa2-client.4f18ecea3174423192bba7ef2bac267f
+    client_secret: amzn1.oa2-cs.v1.b549e58e391d268141a209a5a9f80a7d8adb10a798faa3bcf1e23d1b75b3d458
+
+mqtt: !include mqtt.yaml
+
+homekit: !include homekit.yaml
+
+sonoff: !include sonoff.yaml
+
+homeassistant:
+  packages: !include_dir_named packages

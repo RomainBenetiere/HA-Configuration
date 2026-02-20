@@ -1,0 +1,15 @@
+*
+!*.yaml
+!*.yml
+!*.md
+!.gitignore
+
+# fichiers à exclure
+secrets.yaml
+ip_bans.yaml
+known_devices.yaml
+home-assistant_v2.db
+home-assistant.log
+.storage
+.cloud
+.google.token

@@ -1,0 +1,152 @@
+# Declaration des sensors (equivalents virtuels jeedom) --> Envoi info de Jeedom vers HA
+sensor:
+    - name: "Info Conso Box-Garage"
+      state_topic: "Box-Garage/conso/puissance"
+      device_class: "power"
+      unique_id: puissbox
+
+    - name: "Info Compteur Box-Garage"
+      state_topic: "Box-Garage/conso/compteur"
+      device_class: "distance"
+      unique_id: comptbox
+
+    - name: "Info Total Box-Garage"
+      state_topic: "Box-Garage/conso/total"
+      device_class: "power"
+      unique_id: totalbox
+
+    - name: "Info Temperature Box"
+      state_topic: "Box-Garage/conso/temperature"
+      device_class: "temperature"
+      unique_id: tempbox
+
+    - name: "Info Temperature Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "temperature"
+      value_template: "{{value_json.temperature | float}}"
+      unique_id: tempboxe+
+
+    - name: "Info Humidité Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "humidity"
+      value_template: "{{value_json.humidity | float}}"
+      unique_id: humboxe+
+
+    - name: "Info Lumière Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "illuminance"
+      value_template: "{{value_json.lux | float}}"
+      unique_id: luxboxe+
+
+    - name: "Info NH3 Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "nitrous_oxide"
+      value_template: "{{value_json.nh3 | float}}"
+      unique_id: nh3boxe+
+
+    - name: "Info Oxidized Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "nitrous_oxide"
+      value_template: "{{value_json.oxidised | float}}"
+      unique_id: oxiboxe+
+
+    - name: "Info PM1 Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "pm1"
+      value_template: "{{value_json.pm1 | float}}"
+      unique_id: pm1boxe+
+
+    - name: "Info PM10 Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "pm10"
+      value_template: "{{value_json.pm10 | float}}"
+      unique_id: pm10boxe+
+
+    - name: "Info PM25 Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "pm25"
+      value_template: "{{value_json.pm25 | float}}"
+      unique_id: pm25boxe+
+
+    - name: "Info Pressure Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "pressure"
+      value_template: "{{value_json.pressure | float}}"
+      unique_id: pressboxe+
+
+    - name: "Info Reduced Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "nitrous_oxide"
+      value_template: "{{value_json.reduced | float}}"
+      unique_id: redboxe+
+
+    - name: "Info Temperature CPU Box Env+"
+      state_topic: "Box-Garage/Bureau/Enviroplus"
+      device_class: "temperature"
+      value_template: "{{value_json.cpu_temperature | float}}"
+      unique_id: tempcpuboxe+
+
+    - name: "Piscine Température"
+      state_topic: "ha/piscine/sensor/ezo_temperature/state"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      unique_id: temp_piscine
+
+    - name: "Piscine ORP"
+      state_topic: "ha/piscine/sensor/ezo_orp/state"
+      unit_of_measurement: "mV"
+      state_class: measurement
+      unique_id: orp_piscine
+
+    - name: "Piscine État Pompe"
+      state_topic: "ha/piscine/sensor/pump_state/state"
+      icon: mdi:water-pump
+      unique_id: pump_state_piscine
+
+    - name: "Piscine pH"
+      state_topic: "ha/piscine/sensor/ezo_ph/state"
+      unit_of_measurement: "pH"
+      state_class: measurement
+      unique_id: pH_piscine
+
+binary_sensor:
+
+    - name: "Info Lum Chb-Art"
+      state_topic: "Chb-Art/Prise/Etat"
+      device_class: "Light"
+      unique_id: lumart
+
+    - name: "Info Lum Chb-Elliot"
+      state_topic: "Chb-Elliot/Prise/Etat"
+      device_class: "Light"
+      unique_id: lumelliot
+
+    - name: "Info Radiateur Box"
+      state_topic: "Box-Garage/Bureau/Radiateur"
+      device_class: "Heat"
+      unique_id: boxburrad
+
+    - name: "Piscine Pompe (état)"
+      state_topic: "ha/piscine/switch/pump/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: pump_piscine
+
+    - name: "Piscine Robot (état)"
+      state_topic: "ha/piscine/switch/turbo/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: turbo_piscine
+ 
+#Declaration des etats et modules de commande entre Jeedom et HA --> Pilotage Jeedom via HA
+switch:
+  - name: "Lumiere Ext Parking"
+    command_topic: "Bureau_Buanderie/lumiere/set"
+    state_topic: "Bureau_Buanderie/lumiere/state"
+    qos: 0
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    retain: false
+

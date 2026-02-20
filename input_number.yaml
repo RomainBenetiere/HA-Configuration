@@ -1,0 +1,53 @@
+iazimuth_ne:
+  name: AzimuthNE
+  min: 0
+  max: 360
+  step: 1
+
+azimuth_se:
+  name: AzimuthSE
+  min: 0
+  max: 360
+  step: 1
+
+azimuth_s:
+  name: AzimuthS
+  min: 0
+  max: 360
+  step: 1
+
+azimuth_o:
+  name: AzimuthO
+  min: 0
+  max: 360
+  step: 1
+
+azimuth_no:
+  name: AzimuthNO
+  min: 0
+  max: 360
+  step: 1
+
+angle_soleil:
+  name: AngleSoleil
+  min: -90
+  max: 90
+  step: 1
+
+temperature_exterieure_min:
+  name: TemperatureExterieureMin
+  min: -20
+  max: 60
+  step: 0.5
+
+temperature_interieure_max:
+  name: TemperatureInterieureMax
+  min: 0
+  max: 40
+  step: 0.5
+
+temperature_interieure_min:
+  name: TemperatureInterieureMin
+  min: 0
+  max: 40
+  step: 0.5

@@ -1,0 +1,762 @@
+- id: '1696796989499'
+  alias: Lumiere Conso
+  description: ''
+  triggers:
+  - trigger: state
+    id: hue_change
+    entity_id:
+    - sensor.color_hue
+  - trigger: time_pattern
+    id: every5
+    minutes: /5
+  - trigger: state
+    id: carillon_pressed
+    entity_id: binary_sensor.carillon
+  conditions: []
+  actions:
+  - variables:
+      light_target: light.lampeconso_led_strip
+      hue_sensor: sensor.color_hue
+      effect_name: strobe
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: carillon_pressed
+      sequence:
+      - data:
+          scene_id: snapshot_lampeconso_avant_strobe
+          snapshot_entities:
+          - '{{ light_target }}'
+        action: scene.create
+      - target:
+          entity_id: '{{ light_target }}'
+        data:
+          effect: '{{ effect_name }}'
+          brightness: 255
+        action: light.turn_on
+      - delay: 00:00:20
+      - target:
+          entity_id: scene.snapshot_lampeconso_avant_strobe
+        action: scene.turn_on
+        data: {}
+    default:
+    - if:
+      - condition: time
+        after: 07:00:00
+        before: '23:00:00'
+      then:
+      - if:
+        - condition: numeric_state
+          entity_id: sensor.color_hue
+          above: -0.1
+          below: 240.1
+        then:
+        - data:
+            hs_color:
+            - '{{ states(''sensor.color_hue'') | int }}'
+            - 100
+          target:
+            entity_id: light.lampeconso_led_strip
+          action: light.turn_on
+        else:
+        - if:
+          - condition: numeric_state
+            entity_id: sensor.color_hue
+            below: 1
+          then:
+          - data:
+              hs_color:
+              - 0
+              - 100
+            target:
+              entity_id: light.lampeconso_led_strip
+            action: light.turn_on
+          - if:
+            - condition: numeric_state
+              entity_id: sensor.color_hue
+              above: 240
+            then:
+            - data:
+                hs_color:
+                - 240
+                - 100
+              target:
+                entity_id: light.lampeconso_led_strip
+              action: light.turn_on
+      else:
+      - target:
+          entity_id: light.lampeconso_led_strip
+        action: light.turn_off
+        data: {}
+  mode: single
+- id: '1705436833717'
+  alias: Chauffage_Box_Absent
+  description: ''
+  triggers:
+  - topic: Box-Garage/Bureau/Radiateur
+    payload: Absent
+    trigger: mqtt
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: c203367dac01dfd336b26690a5cc1811
+    entity_id: 2afee76a49c90a44a3ea85ad995356a9
+    domain: switch
+  mode: single
+- id: '1705436870088'
+  alias: Chauffage_Box_Confort
+  description: ''
+  triggers:
+  - topic: Box-Garage/Bureau/Radiateur
+    payload: Confort
+    trigger: mqtt
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: c203367dac01dfd336b26690a5cc1811
+    entity_id: 2afee76a49c90a44a3ea85ad995356a9
+    domain: switch
+- id: '1724310675473'
+  alias: charge_start
+  description: Charge Voiture Elec
+  triggers:
+  - entity_id: binary_sensor.power_excess
+    trigger: state
+  - entity_id: binary_sensor.power_shortage
+    trigger: state
+  - at: 03:00:00
+    trigger: time
+  - at: 06:54:00
+    trigger: time
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.power_excess
+        state: 'on'
+      - condition: state
+        entity_id: switch.charge_voiture
+        state: 'off'
+      - condition: time
+        before: '18:00:00'
+        after: 07:00:00
+      sequence:
+      - entity_id: switch.charge_voiture
+        action: switch.turn_on
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.power_shortage
+        state: 'on'
+      - condition: state
+        entity_id: switch.charge_voiture
+        state: 'on'
+      - condition: time
+        before: '18:00:00'
+        after: 07:00:00
+      sequence:
+      - entity_id: switch.charge_voiture
+        action: switch.turn_off
+    - conditions:
+      - condition: time
+        after: 02:59:59
+        before: 06:53:59
+      - condition: state
+        entity_id: switch.charge_voiture
+        state: 'off'
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.charge_voiture
+    - conditions:
+      - condition: time
+        after: 06:53:59
+        before: '10:00:00'
+      - condition: state
+        entity_id: switch.charge_voiture
+        state: 'on'
+      sequence:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.charge_voiture
+  initial_state: true
+- id: '1734951723349'
+  alias: Lum Couloir Nuit Auto
+  description: ''
+  triggers:
+  - minutes: /15
+    seconds: 0
+    trigger: time_pattern
+  conditions:
+  - condition: or
+    conditions:
+    - condition: time
+      after: '21:55:00'
+    - condition: time
+      before: 06:00:00
+  actions:
+  - target:
+      entity_id: scene.couloir_veilleuse
+    action: scene.turn_on
+  mode: single
+- id: '1738416190190'
+  alias: Ouvrir Volet Chambres
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - device_id: 98cdf13d1da9a9337894d0495f0bf6b7
+    domain: cover
+    entity_id: 2c8355b2e0315ae06441f55aa13bf55d
+    type: open
+  - device_id: bc9800a77ed5505f28b88a67dc0d02eb
+    domain: cover
+    entity_id: fec3ac99446b2f43002c779f6c320a4e
+    type: open
+  - device_id: 77fcc8dce1aa22fea987f0fffcc434fa
+    domain: cover
+    entity_id: 75af5c296e4e4d583782c84984a784ab
+    type: open
+  mode: single
+- id: '1738416274896'
+  alias: Fermer Volet Chambres
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - device_id: 98cdf13d1da9a9337894d0495f0bf6b7
+    domain: cover
+    entity_id: 2c8355b2e0315ae06441f55aa13bf55d
+    type: close
+  - device_id: bc9800a77ed5505f28b88a67dc0d02eb
+    domain: cover
+    entity_id: fec3ac99446b2f43002c779f6c320a4e
+    type: close
+  - device_id: 77fcc8dce1aa22fea987f0fffcc434fa
+    domain: cover
+    entity_id: 75af5c296e4e4d583782c84984a784ab
+    type: close
+  mode: single
+- id: '1738416728247'
+  alias: Ouvrir Volets Cuis-SaM
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - device_id: 6e580211f21646ddbfb08a80af70e0a7
+    domain: cover
+    entity_id: 0f21b13dc2f443f25f53f7e295e48701
+    type: open
+    enabled: false
+  - device_id: c29d4aacb857904f465b49f37eb9beb6
+    domain: cover
+    entity_id: 3d7e6c49cae62af61dfb2297dc21b571
+    type: open
+  - device_id: c3feae0c687b6baf7ae418bb2e1ff56d
+    domain: cover
+    entity_id: cddcb27b2fe434617f8c3776e260e6c6
+    type: open
+    enabled: true
+  - device_id: 816cce10ab9927db60565d28c8da5089
+    domain: cover
+    entity_id: c2f9b7ca7078d1cb5a474a224b912259
+    type: open
+    enabled: true
+  mode: single
+- id: '1738416803805'
+  alias: Fermer Volets Cuis-Sam
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - device_id: 6e580211f21646ddbfb08a80af70e0a7
+    domain: cover
+    entity_id: 0f21b13dc2f443f25f53f7e295e48701
+    type: close
+    enabled: false
+  - device_id: c3feae0c687b6baf7ae418bb2e1ff56d
+    domain: cover
+    entity_id: cddcb27b2fe434617f8c3776e260e6c6
+    type: close
+  - device_id: 816cce10ab9927db60565d28c8da5089
+    domain: cover
+    entity_id: c2f9b7ca7078d1cb5a474a224b912259
+    type: close
+    enabled: true
+  - device_id: c29d4aacb857904f465b49f37eb9beb6
+    domain: cover
+    entity_id: 3d7e6c49cae62af61dfb2297dc21b571
+    type: close
+    enabled: false
+  mode: single
+- id: '1738417148505'
+  alias: Ouverture Volet Matin
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: '- 00:15:00'
+  - trigger: time
+    at: 08:00:00
+  conditions: []
+  actions:
+  - action: automation.trigger
+    metadata: {}
+    data:
+      skip_condition: true
+    target:
+      entity_id: automation.ouvrir_volets_cuis_sam
+  mode: single
+- id: '1738417329918'
+  alias: Fermeture Volets Soir
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 00:15:00
+  conditions: []
+  actions:
+  - action: automation.trigger
+    metadata: {}
+    data:
+      skip_condition: true
+    target:
+      entity_id:
+      - automation.fermer_volets_cuis_sam
+  - action: automation.trigger
+    metadata: {}
+    data:
+      skip_condition: true
+    target:
+      entity_id: automation.fermer_volet_chambres
+  - device_id: 8faad01aa58813fc586a9e77935f4274
+    domain: cover
+    entity_id: 7d1d1f3ec8e7b1e70a1180181157e829
+    type: close
+  mode: single
+- id: '1738417488587'
+  alias: Ouvrir Volet Chambre Matin
+  description: ''
+  triggers:
+  - trigger: time
+    at: '10:00:00'
+  conditions: []
+  actions:
+  - action: automation.trigger
+    metadata: {}
+    data:
+      skip_condition: true
+    target:
+      entity_id: automation.ouvrir_volet_cham_arthur
+  - device_id: 8faad01aa58813fc586a9e77935f4274
+    domain: cover
+    entity_id: 7d1d1f3ec8e7b1e70a1180181157e829
+    type: open
+  mode: single
+- id: '1756564943530'
+  alias: Gestion volets (soleil & températures)
+  description: Automation unique Est/Sud/Ouest
+  triggers:
+  - entity_id: sun.sun
+    attribute: azimuth
+    trigger: state
+  - entity_id: sun.sun
+    attribute: elevation
+    trigger: state
+  - entity_id:
+    - sensor.temp_hr_jardin_temperature
+    - sensor.temp_hr_chambre_temperature
+    - sensor.temp_hr_salon_temperature
+    trigger: state
+  - minutes: /5
+    trigger: time_pattern
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ az > az_ne and az < az_se\n   and t_ext_max > t_ext_min\n
+          \  and elev > ang_min\n   and t_chambre > t_int_max }}\n"
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_cham_parents
+        action: cover.close_cover
+        data: {}
+    - conditions:
+      - condition: template
+        value_template: "{{ az > az_se and az < az_s\n   and t_ext_max > t_ext_min\n
+          \  and elev > ang_min\n   and t_salon > t_int_max }}\n"
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_cham_arthur
+        action: cover.close_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_cham_elliot
+        action: cover.close_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_sam_1
+        action: cover.close_cover
+        data: {}
+    - conditions:
+      - condition: template
+        value_template: "{{ az > az_o and az < az_no\n   and t_ext_max > t_ext_min\n
+          \  and elev > ang_min\n   and t_salon > t_int_max }}\n"
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_sam_2
+        action: cover.close_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_salon
+        action: cover.close_cover
+        data: {}
+      - target:
+          entity_id: cover.volets_roulants_buanderie
+        action: cover.close_cover
+        data: {}
+    - conditions:
+      - condition: template
+        value_template: '{{ sunset is not none and (now() +
+
+          timedelta(minutes=30)).strftime(''%H:%M:%S'') > as_datetime(sunset) and
+          (now() +
+
+          timedelta(minutes=15)).strftime(''%H:%M:%S'') < as_datetime(sunset)
+
+          }}
+
+          '
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_sam_2
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_salon
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volets_roulants_buanderie
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_cham_arthur
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_cham_elliot
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_sam_1
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_cham_parents
+        action: cover.open_cover
+        data: {}
+    - conditions:
+      - condition: and
+        conditions:
+        - condition:
+          - condition: template
+            value_template: '{{ now().hour >= 10 and (now() + timedelta(minutes=10)).strftime(''%H:%M:%S'')
+              < as_datetime(sunset)}} '
+          - condition: template
+            value_template: '{{ az >= az_no }}'
+          - condition: template
+            value_template: '{{ t_salon <= t_int_min }}'
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_sam_2
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_salon
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volets_roulants_buanderie
+        action: cover.open_cover
+        data: {}
+    - conditions:
+      - condition: and
+        conditions:
+        - condition:
+          - condition: template
+            value_template: '{{ now().hour >= 10 and (now() + timedelta(minutes=10)).strftime(''%H:%M:%S'')
+              < as_datetime(sunset)}} '
+          - condition: template
+            value_template: '{{ az > (az_s + 10)}}'
+          - condition: template
+            value_template: '{{t_salon <= t_int_min }}'
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_cham_arthur
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_cham_elliot
+        action: cover.open_cover
+        data: {}
+      - target:
+          entity_id: cover.volet_roulant_sam_1
+        action: cover.open_cover
+        data: {}
+    - conditions:
+      - condition: and
+        conditions:
+        - condition:
+          - condition: template
+            value_template: '{{ now().hour >= 10 and (now() + timedelta(minutes=10)).strftime(''%H:%M:%S'')
+              < as_datetime(sunset)}} '
+          - condition: template
+            value_template: '{{ az > az_s }}'
+          - condition: template
+            value_template: '{{t_chambre <= t_int_min }}'
+      sequence:
+      - target:
+          entity_id: cover.volet_roulant_cham_parents
+        action: cover.open_cover
+        data: {}
+    default: []
+  mode: single
+  variables:
+    az: '{{ state_attr(''sun.sun'',''azimuth'') | float(0) }}'
+    elev: '{{ state_attr(''sun.sun'',''elevation'') | float(-90) }}'
+    sunset: '{{ state_attr(''sun.sun'',''next_setting'') }}'
+    t_ext_max: '{{ states(''sensor.temp_hr_jardin_temperature'') | float(-100) }}'
+    t_chambre: '{{ states(''sensor.temp_hr_chambre_temperature'') | float(-100) }}'
+    t_salon: '{{ states(''sensor.temp_hr_salon_temperature'') | float(-100) }}'
+    az_ne: '{{ states(''input_number.azimuth_ne'') | float(0) }}'
+    az_se: '{{ states(''input_number.azimuth_se'') | float(0) }}'
+    az_s: '{{ states(''input_number.azimuth_s'')  | float(0) }}'
+    az_o: '{{ states(''input_number.azimuth_o'')  | float(0) }}'
+    az_no: '{{ states(''input_number.azimuth_no'') | float(0) }}'
+    ang_min: '{{ states(''input_number.angle_soleil'') | float(0) }}'
+    t_ext_min: '{{ states(''input_number.temperature_exterieure_min'') | float(0)
+      }}'
+    t_int_max: '{{ states(''input_number.temperature_interieure_max'') | float(0)
+      }}'
+    t_int_min: '{{ states(''input_number.temperature_interieure_min'') | float(0)
+      }}'
+- &id001
+  id: lumieres_portail_nuit_10min
+  alias: Lum Ext Portail — nuit — 10 min
+  description: ''
+  triggers:
+  - entity_id: switch.portail_open_portal
+    to: 'on'
+    trigger: state
+  conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  actions:
+  - target:
+      entity_id:
+      - switch.lumiere_parking
+      - switch.sonoff_1001fc68e5_1
+    action: switch.turn_on
+    data: {}
+  - delay: 00:10:00
+  - target:
+      entity_id:
+      - switch.lumiere_parking
+      - switch.sonoff_1001fc68e5_1
+    action: switch.turn_off
+    data: {}
+  mode: restart
+- *id001
+- id: '1757844626055'
+  alias: Lum Ext Bureau - 10 min
+  description: ''
+  triggers: []
+  actions:
+  - target:
+      entity_id:
+      - switch.sonoff_100213e598_1
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_10026b7f50_1
+    action: switch.turn_on
+    data: {}
+  - delay: 00:10:00
+  - target:
+      entity_id:
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_100213e598_1
+      - switch.sonoff_10026b7f50_1
+    action: switch.turn_off
+    data: {}
+  mode: restart
+- id: '1757857680157'
+  alias: Depart Bureau
+  description: ''
+  triggers:
+  - entity_id:
+    - switch.sonoff_1002143dbb_1
+    trigger: state
+    to: 'off'
+  conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  actions:
+  - target:
+      entity_id:
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_100213e598_1
+      - switch.sonoff_10026b7f50_1
+    action: switch.turn_on
+    data: {}
+  - delay: 00:10:00
+  - target:
+      entity_id:
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_100213e598_1
+      - switch.sonoff_10026b7f50_1
+    action: switch.turn_off
+    data: {}
+  mode: restart
+- id: '1757857858571'
+  alias: Arrivée Bureau
+  description: ''
+  triggers: []
+  conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.sonoff_1002143dbb_1
+  - target:
+      entity_id:
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_100213e598_1
+    action: switch.turn_on
+    data: {}
+  - delay: 00:10:00
+  - target:
+      entity_id:
+      - switch.sonoff_1001fc68e5_1
+      - switch.sonoff_100213e598_1
+    action: switch.turn_off
+    data: {}
+  mode: restart
+- id: '1765227075289'
+  alias: Allumer Sapin
+  description: ''
+  triggers:
+  - trigger: time
+    at: 07:00:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - trigger: sun
+    event: sunset
+    offset: 00:10:00
+  conditions: []
+  actions:
+  - device_id: a46e50d3d467999932a324687f477a56
+    domain: rfxtrx
+    type: send_command
+    subtype: 'On'
+  mode: single
+- id: '1765227170009'
+  alias: Eteindre Sapin
+  description: ''
+  triggers:
+  - trigger: time
+    at: 08:30:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - trigger: time
+    at: '22:30:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - device_id: a46e50d3d467999932a324687f477a56
+    domain: rfxtrx
+    type: send_command
+    subtype: 'Off'
+  mode: single
+- id: '1765227251198'
+  alias: Allumer Biliothèque
+  description: ''
+  triggers:
+  - trigger: time
+    at: 07:00:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - trigger: sun
+    event: sunset
+    offset: 00:-10:00
+  conditions: []
+  actions:
+  - device_id: 94649beb6ff77b796532371cd6bd38ae
+    domain: rfxtrx
+    type: send_command
+    subtype: 'On'
+  mode: single
+- id: '1765227368872'
+  alias: Eteindre Biliothèque
+  description: ''
+  triggers:
+  - trigger: time
+    at: 08:30:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - trigger: time
+    at: '22:30:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - device_id: 94649beb6ff77b796532371cd6bd38ae
+    domain: rfxtrx
+    type: send_command
+    subtype: 'Off'
+  mode: single

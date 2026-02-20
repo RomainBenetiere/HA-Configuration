@@ -1,0 +1,14 @@
+- platform: template
+  switches:
+    pompe30:
+      friendly_name: "Pompe 30 minutes"
+      unique_id: pompe3001
+      value_template: "{{ is_state('input_boolean.pompe30', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.pompe30
+      turn_off:
+        service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.pompe30
