@@ -1,0 +1,339 @@
+input_number:
+  h_perte_batiment:
+    name: H (pertes bâtiment) [W/K]
+    min: 50
+    max: 1500
+    step: 1
+    mode: box
+    unit_of_measurement: W/K
+    icon: mdi:home-thermometer
+    initial: 344
+
+  dt_eau_min_include:
+    name: ΔT eau min pour intégrer Q_th (K)
+    min: 0
+    max: 10
+    step: 0.1
+    unit_of_measurement: K
+    icon: mdi:water-thermometer
+    initial: 2
+
+  power_on_threshold:
+    name: Seuil marche PAC (W)
+    min: 200
+    max: 5000
+    step: 50
+    unit_of_measurement: W
+    icon: mdi:flash
+    initial: 1000
+
+  flow_l_min:
+    name: Débit hypothèse (L/min) pour modèle ΔT_eau
+    min: 1
+    max: 20
+    step: 0.5
+    unit_of_measurement: "L/min"
+    icon: mdi:pump
+    initial: 4
+
+  loi_eau_tmin:
+    name: Loi d'eau - Tmin (°C)
+    min: 10
+    max: 35
+    step: 0.5
+    unit_of_measurement: "°C"
+    icon: mdi:coolant-temperature
+    initial: 22
+
+  loi_eau_pente:
+    name: Loi d'eau - Pente
+    min: 0.1
+    max: 2.0
+    step: 0.05
+    icon: mdi:chart-line
+    initial: 0.50
+
+  loi_eau_tmax:
+    name: Loi d'eau - Tmax (°C)
+    min: 20
+    max: 60
+    step: 0.5
+    unit_of_measurement: "°C"
+    icon: mdi:thermometer-high
+    initial: 35
+
+  ambiance_k:
+    name: Gain d'ambiance K (°C eau / °C pièce)
+    min: 0
+    max: 5
+    step: 0.1
+    icon: mdi:scale
+    initial: 2.2
+
+  ambiance_consigne_confort:
+    name: Ambiance - Confort (°C)
+    min: 15
+    max: 23
+    step: 0.1
+    unit_of_measurement: "°C"
+    icon: mdi:home-thermometer
+    initial: 20.0
+  ambiance_consigne_eco:
+    name: Ambiance - Eco (°C)
+    min: 12
+    max: 22
+    step: 0.1
+    unit_of_measurement: "°C"
+    icon: mdi:moon-waning-crescent
+    initial: 17.0
+
+# --- Semaine (lun–ven) : 2 créneaux Confort
+input_datetime:
+  wd_comfort1_start:
+    name: "Semaine - Début Confort 1"
+    has_time: true
+    has_date: false
+    initial: "06:00:00"
+  wd_comfort1_end:
+    name: "Semaine - Fin Confort 1"
+    has_time: true
+    has_date: false
+    initial: "08:30:00"
+  wd_comfort2_start:
+    name: "Semaine - Début Confort 2"
+    has_time: true
+    has_date: false
+    initial: "17:30:00"
+  wd_comfort2_end:
+    name: "Semaine - Fin Confort 2"
+    has_time: true
+    has_date: false
+    initial: "22:30:00"
+
+  # --- Week-end (sam–dim) : 2 créneaux Confort
+  we_comfort1_start:
+    name: "Week-end - Début Confort 1"
+    has_time: true
+    has_date: false
+    initial: "07:30:00"
+  we_comfort1_end:
+    name: "Week-end - Fin Confort 1"
+    has_time: true
+    has_date: false
+    initial: "12:00:00"
+  we_comfort2_start:
+    name: "Week-end - Début Confort 2"
+    has_time: true
+    has_date: false
+    initial: "17:00:00"
+  we_comfort2_end:
+    name: "Week-end - Fin Confort 2"
+    has_time: true
+    has_date: false
+    initial: "23:00:00"
+
+# Overrides manuels optionnels
+input_boolean:
+  force_confort:
+    name: Forcer Confort
+    icon: mdi:thumb-up
+  force_eco:
+    name: Forcer Eco
+    icon: mdi:thumb-down
+
+template:
+  - sensor:
+      - name: "Consigne_ambiance_active"
+        unique_id: consigne_ambiance_active
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon: mdi:thermometer
+        state: >
+          {% set t_confort = states('input_number.ambiance_consigne_confort')|float(20) %}
+          {% set t_eco     = states('input_number.ambiance_consigne_eco')|float(17) %}
+          {% set wd        = is_state('binary_sensor.workday_sensor','on') %}
+
+          {% set s1 = states('input_datetime.wd_comfort1_start') if wd else states('input_datetime.we_comfort1_start') %}
+          {% set e1 = states('input_datetime.wd_comfort1_end')   if wd else states('input_datetime.we_comfort1_end') %}
+          {% set s2 = states('input_datetime.wd_comfort2_start') if wd else states('input_datetime.we_comfort2_start') %}
+          {% set e2 = states('input_datetime.wd_comfort2_end')   if wd else states('input_datetime.we_comfort2_end') %}
+
+          {% set now_min = now().hour*60 + now().minute %}
+          {% set s1m = s1.split(':')[0]|int*60 + s1.split(':')[1]|int %}
+          {% set e1m = e1.split(':')[0]|int*60 + e1.split(':')[1]|int %}
+          {% set s2m = s2.split(':')[0]|int*60 + s2.split(':')[1]|int %}
+          {% set e2m = e2.split(':')[0]|int*60 + e2.split(':')[1]|int %}
+
+          {# fonction "dans intervalle" avec gestion du chevauchement minuit #}
+          {% set in1 = (s1m <= e1m and s1m <= now_min <= e1m) or (s1m > e1m and (now_min >= s1m or now_min <= e1m)) %}
+          {% set in2 = (s2m <= e2m and s2m <= now_min <= e2m) or (s2m > e2m and (now_min >= s2m or now_min <= e2m)) %}
+          {% set in_comfort = in1 or in2 %}
+
+          {% if is_state('input_boolean.force_confort','on') %}
+            {{ t_confort }}
+          {% elif is_state('input_boolean.force_eco','on') %}
+            {{ t_eco }}
+          {% else %}
+            {{ (t_confort if in_comfort else t_eco) }}
+          {% endif %}
+
+      # CONSIGNE EAU VIRTUELLE (loi d'eau + correction ambiance K)
+
+      - name: "Consigne_eau_virtuelle"
+        unique_id: consigne_eau_virtuelle
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon: mdi:thermometer
+        state: >
+          {% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %}
+          {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %}
+          {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %}
+          {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+
+          {% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #}
+          {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #}
+          {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+
+          {% set t_base = (Tmin - Text) * Pente + Tmin %}
+          {% set t_corr = t_base + K * (Tcons - Tpie) %}
+          {% if t_corr < Tmin %} {{ Tmin }}
+          {% elif t_corr > Tmax %} {{ Tmax }}
+          {% else %} {{ t_corr|round(1) }}
+          {% endif %}
+
+      - name: "Ecart_depart_vs_consigne"
+        unique_id: ecart_depart_vs_consigne
+        unit_of_measurement: "K"
+        icon: mdi:delta
+        state: >
+          {% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #}
+          {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %}
+          {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+            {{ (Tdep - Tcib)|round(1) }}
+          {% else %}
+            unknown
+          {% endif %}
+
+      # (KPI 1) Q_th instantané (W) = H * (Tint - Text)
+      - name: "Q_th"
+        unique_id: q_th_instant
+        unit_of_measurement: "W"
+        device_class: power
+        state: >
+          {% set H = states('input_number.h_perte_batiment')|float(344) %}
+          {% set Tint = states('sensor.salon_temperature_corrigee')|float %}
+          {% set Text = states('sensor.jardin_temperature_corrigee')|float %}
+          {{ (Tint - Text) * H }}
+
+      # (KPI 2) Q_th filtré (ΔT_eau >= seuil) -> sinon 0 (évite le bruit)
+      - name: "Q_th_valid"
+        unique_id: q_th_valid_instant
+        unit_of_measurement: "W"
+        device_class: power
+        state: >
+          {% set Pmin = states('input_number.power_on_threshold')|float(2) %}
+          {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %}
+          {% set dTeau = states('sensor.suivipac_temppac_diff')|float %}
+          {% if P >= Pmin %}
+            {{ states('sensor.q_th')|float }}
+          {% else %}
+            unknown
+          {% endif %}
+
+      # (KPI 3) COP instantané estimé = Q_th / P_elec
+      - name: "COP_instantane"
+        unique_id: cop_instant
+        unit_of_measurement: ""
+        icon: mdi:chart-bell-curve
+        state: >
+          {% set Pmin = states('input_number.power_on_threshold')|float(2) %}
+          {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %}
+          {% set Q = states('sensor.q_th')|float(0) %}
+          {% if P >= Pmin %}
+            {{ (Q / P) | round(2) }}
+          {% else %}
+            unknown
+          {% endif %}
+
+      # (KPI 4) ΔT eau théorique (avec débit fixe réglable)
+      - name: "delta_eau_modele"
+        unique_id: delta_eau_modele
+        unit_of_measurement: "K"
+        icon: mdi:water-thermometer
+        state: >
+          {% set H = states('input_number.h_perte_batiment')|float(344) %}
+          {% set Tint = states('sensor.salon_temperature_corrigee')|float %}
+          {% set Text = states('sensor.jardin_temperature_corrigee')|float %}
+          {% set V_l_min = states('input_number.flow_l_min')|float(4) %}
+          {% set V_m3_h = V_l_min * 0.06 %}
+          {% set Q_kW = (H * (Tint - Text)) / 1000 %}
+          {% if V_m3_h > 0 %}
+            {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+          {% else %}
+            unknown
+          {% endif %}
+
+      # (KPI 5) Ecart ΔT eau (mesuré - modèle)
+      - name: "delta_eau_ecart"
+        unique_id: delta_eau_ecart
+        unit_of_measurement: "K"
+        icon: mdi:delta
+        state: >
+          {% set d_meas = states('sensor.suivipac_temppac_diff')|float %}
+          {% set d_model = states('sensor.delta_eau_modele')|float(0) %}
+          {{ (d_meas - d_model) | round(2) }}
+
+      # (KPI 10) Duty-cycle 1h (%)
+      - name: "Duty_cycle_1h"
+        unique_id: Duty_cycle_1h
+        unit_of_measurement: "%"
+        icon: mdi:percent
+        state: >
+          {% set t_on = states('sensor.temps_on_1h')|float(0) %}
+          {{ (t_on / 60 * 100) | round(1) }}
+
+      # COP journalier (global usage réel)
+      - name: "COP_journalier"
+        unique_id: COP_journalier
+        unit_of_measurement: ""
+        icon: mdi:chart-line
+        state: >
+          {% set eth = states('sensor.q_th_daily')|float(0) %}
+          {% set eel = states('sensor.pac_daily')|float(0) %}
+          {% if eel > 0 %}
+            {{ (eth / eel) | round(2) }}
+          {% else %}
+            unknown
+          {% endif %}
+
+  - binary_sensor:
+      # binaire "PAC en marche" (KPI 6: base pour cycles/duty)
+      - name: "pac_en_marche"
+        unique_id: pac_en_marche
+        state: >
+          {% set thr = states('input_number.power_on_threshold')|float(1000) %}
+          {% set p = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %}
+          {{ p > thr }}
+        device_class: running
+
+# -----------------------------
+# Compteurs journaliers (utility_meter)
+# -----------------------------
+utility_meter:
+  q_th_daily:
+    source: sensor.q_th_energy
+    cycle: daily
+  pac_daily:
+    source: sensor.pac_energy
+    cycle: daily
+
+# =========================
+# Cycles 1h (counter + automations)
+# =========================
+counter:
+  pac_cycles_1h:
+    name: Cycles 1h
+    initial: 0
+    step: 1
+    restore: false
+    icon: mdi:counter

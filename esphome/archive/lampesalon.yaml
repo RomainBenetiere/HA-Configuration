@@ -1,0 +1,28 @@
+esphome:
+  name: lampesalon
+  friendly_name: LampeSalon
+
+rp2040:
+  board: rpipicow
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "B1STgfL4oAQ08j0SAAZr220/yQhJbW3DhOpVpQlkg+Q="
+
+ota:
+  - platform: esphome
+    password: "dd553b435f63d937956323400f94b6e3"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "Lampesalon Fallback Hotspot"
+    password: "CHC0HhMCXPY8"
+    

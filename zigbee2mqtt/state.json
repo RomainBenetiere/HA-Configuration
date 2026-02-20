@@ -1,0 +1,10 @@
+{
+    "0x00124b002a6cec3b": {
+        "voltage": 2900,
+        "battery": 99.5,
+        "linkquality": 164,
+        "occupancy": true,
+        "tamper": false,
+        "battery_low": false
+    }
+}

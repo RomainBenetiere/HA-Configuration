@@ -1,0 +1,20 @@
+{
+  "domain": "aarlo",
+  "name": "Arlo Camera Support",
+  "codeowners": [
+    "@twrecked"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "ffmpeg"
+  ],
+  "documentation": "https://github.com/twrecked/hass-aarlo/blob/master/README.md",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/twrecked/hass-aarlo/issues",
+  "requirements": [
+    "unidecode",
+    "pyaarlo==0.8.0.17",
+    "aiofiles"
+  ],
+  "version": "0.8.1.19"
+}

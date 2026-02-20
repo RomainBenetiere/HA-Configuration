@@ -1,5 +1,5 @@
 # ignore tout
-*
+#*
 
 # ré-autoriser certains fichiers
 !*.yaml

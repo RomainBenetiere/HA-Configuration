@@ -1,0 +1,80 @@
+esphome:
+  name: suivipac
+  friendly_name: suivipac
+
+rp2040:
+  board: rpipicow
+  framework:
+    # Required until https://github.com/platformio/platform-raspberrypi/pull/36 is merged
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git#5e87ae34ca025274df25b3303e9e9cb6c120123c
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "V4pzfIExPdSyrGbGi9ZM8ORe3WTrHEiUYa2/m1sXdIQ="
+
+ota:
+- platform: esphome
+  password: "5606aa934fea4fe50dc1e1ce8de48c82"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Suivipac Fallback Hotspot"
+    password: "jss6o3gfOxj6"
+
+one_wire:
+  - platform: gpio
+    pin: GPIO28
+
+sensor:
+  - platform: dallas_temp
+    address: 0x8a062017bd7e3928
+    id: pactempin
+    name: "TempPAC_IN"
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+
+  - platform: dallas_temp
+    address: 0x230620179967bf28
+    id: pactempout
+    name: "TempPAC_OUT"
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+
+  - platform: dht
+    pin: GPIO27
+    model: AM2302
+    temperature:
+      id: paccabtemp
+      name: "PAC_Cabinet_Temp"
+    humidity:
+      name: "PAC_Cabinet_HR"
+      id: paccabHR
+    update_interval: 10s
+
+    
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 60s   
+
+  - platform: template
+    name: "TempPAC_Diff"
+    id: pactempdiff
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+    lambda : |-
+          float difference = id(pactempin).state - id(pactempout).state;
+          return difference;

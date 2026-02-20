@@ -1,0 +1,52 @@
+esphome:
+  name: portail
+  friendly_name: Portail
+
+rp2040:
+  board: rpipicow
+  framework:
+    # Required until https://github.com/platformio/platform-raspberrypi/pull/36 is merged
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git#5e87ae34ca025274df25b3303e9e9cb6c120123c
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "bQWPESWkqfuTNzp/Oh7HvlwsOrnUqHXZfbaw3bRD7jQ="
+
+ota:
+  platform: esphome
+  password: "b91374f2485a579f45b4da6fda000e69"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "Portail Fallback Hotspot"
+    password: "zvCR0sCSZx0m"
+
+switch:
+  - platform: gpio
+    pin: GPIO2
+    id: relayopen
+    name: "Open Portal"
+    on_turn_on:
+    - delay: 200ms
+    - switch.turn_off: relayopen
+
+  - platform: gpio
+    pin: GPIO3
+    id: relayclose
+    name: "Close Portal"
+    on_turn_on:
+    - delay: 200ms
+    - switch.turn_off: relayclose
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 60s   

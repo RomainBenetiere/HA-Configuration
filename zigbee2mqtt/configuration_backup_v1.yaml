@@ -1,0 +1,47 @@
+homeassistant: true
+advanced:
+  network_key:
+    - 152
+    - 210
+    - 71
+    - 29
+    - 161
+    - 79
+    - 217
+    - 45
+    - 32
+    - 213
+    - 68
+    - 221
+    - 205
+    - 6
+    - 223
+    - 85
+  pan_id: 16871
+  ext_pan_id:
+    - 2
+    - 21
+    - 62
+    - 246
+    - 27
+    - 77
+    - 247
+    - 241
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: homeassistant
+  password: bie3einiph3ohMohTh9aixu3keehai3Eipho8voequaidoofoh8ayeeliWa5yie4
+serial:
+  port: >-
+    /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20220707104425-if00
+  adapter: ezsp
+frontend:
+  port: 8099
+device_options:
+  legacy: false
+devices:
+  '0x00124b002a6cec3b':
+    friendly_name: Detecteur Presence

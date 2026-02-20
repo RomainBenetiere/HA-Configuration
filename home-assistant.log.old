@@ -1,0 +1,452 @@
+2026-02-14 14:26:45.766 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.767 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration yi_hack which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.767 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration sonoff which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.768 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration versatile_thermostat which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.768 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration rfplayer which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.769 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration aarlo which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:45.769 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration extended_openai_conversation which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-14 14:26:46.779 ERROR (MainThread) [homeassistant.helpers.translation] Validation of translation placeholders for localized (fr) string component.esphome.entity.select.pipeline.name failed: (set() != {'index'})
+2026-02-14 14:26:48.035 ERROR (MainThread) [homeassistant.setup] The 'statistics' integration does not support YAML setup, please remove it from your configuration
+2026-02-14 14:26:50.329 ERROR (MainThread) [homeassistant.setup] The 'filter' integration does not support YAML setup, please remove it from your configuration
+2026-02-14 14:26:50.329 ERROR (MainThread) [homeassistant.setup] The 'history_stats' integration does not support YAML setup, please remove it from your configuration
+2026-02-14 14:26:50.440 ERROR (MainThread) [homeassistant.components.switch] The rfxtrx platform for the switch integration does not support platform setup. Please remove it from your config.
+2026-02-14 14:26:51.311 ERROR (MainThread) [homeassistant.components.automation] Platform automation does not generate unique IDs. ID lumieres_portail_nuit_10min already exists - ignoring automation.lum_ext_portail_nuit_10_min
+2026-02-14 14:26:51.902 WARNING (MainThread) [homeassistant.components.sensor] Entity sensor.info_conso_box_garage (<class 'homeassistant.components.mqtt.sensor.MqttSensor'>) is using native unit of measurement 'None' which is not a valid unit for the device class ('power') it is using; expected one of ['mW', 'GW', 'MW', 'TW', 'W', 'kW']; Please update your configuration if your entity is manually configured, otherwise create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+mqtt%22
+2026-02-14 14:26:51.903 WARNING (MainThread) [homeassistant.components.sensor] Entity sensor.info_compteur_box_garage (<class 'homeassistant.components.mqtt.sensor.MqttSensor'>) is using native unit of measurement 'None' which is not a valid unit for the device class ('distance') it is using; expected one of ['cm', 'nmi', 'm', 'in', 'km', 'yd', 'mi', 'mm', 'ft']; Please update your configuration if your entity is manually configured, otherwise create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+mqtt%22
+2026-02-14 14:26:51.903 WARNING (MainThread) [homeassistant.components.sensor] Entity sensor.info_total_box_garage (<class 'homeassistant.components.mqtt.sensor.MqttSensor'>) is using native unit of measurement 'None' which is not a valid unit for the device class ('power') it is using; expected one of ['mW', 'GW', 'MW', 'TW', 'W', 'kW']; Please update your configuration if your entity is manually configured, otherwise create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+mqtt%22
+2026-02-14 14:26:51.903 WARNING (MainThread) [homeassistant.components.sensor] Entity sensor.info_temperature_box (<class 'homeassistant.components.mqtt.sensor.MqttSensor'>) is using native unit of measurement 'None' which is not a valid unit for the device class ('temperature') it is using; expected one of ['°F', 'K', '°C']; Please update your configuration if your entity is manually configured, otherwise create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+mqtt%22
+2026-02-14 14:26:54.301 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for lampesalon @ 192.168.0.16: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.0.16', port=6053))]: [Errno 113] Connect call failed ('192.168.0.16', 6053) (SocketAPIError)
+2026-02-14 14:26:54.301 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for bubble-beer @ 192.168.0.198: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.0.198', port=6053))]: [Errno 113] Connect call failed ('192.168.0.198', 6053) (SocketAPIError)
+2026-02-14 14:27:06.585 WARNING (MainThread) [homeassistant.components.sensor] Entity sensor.color_hue (<class 'homeassistant.components.template.sensor.StateSensorEntity'>) is using native unit of measurement 'None' which is not a valid unit for the device class ('illuminance') it is using; expected one of ['lx']; Please update your configuration if your entity is manually configured, otherwise create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+template%22
+2026-02-14 14:27:06.587 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %} {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %} {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %} {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+{% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #} {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #} {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+{% set t_base = (Tmin - Text) * Pente + Tmin %} {% set t_corr = t_base + K * (Tcons - Tpie) %} {% if t_corr < Tmin %} {{ Tmin }} {% elif t_corr > Tmax %} {{ Tmax }} {% else %} {{ t_corr|round(1) }} {% endif %}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2446, in forgiving_float_filter
+    return float(value)
+ValueError: could not convert string to float: 'unknown'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 641, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2977, in _render_with_context
+    return template.render(**kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 2, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2449, in forgiving_float_filter
+    raise_no_default("float", value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1975, in raise_no_default
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %} {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %} {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %} {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+{% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #} {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #} {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+{% set t_base = (Tmin - Text) * Pente + Tmin %} {% set t_corr = t_base + K * (Tcons - Tpie) %} {% if t_corr < Tmin %} {{ Tmin }} {% elif t_corr > Tmax %} {{ Tmax }} {% else %} {{ t_corr|round(1) }} {% endif %}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 758, in async_render_to_info
+    render_info._result = self.async_render(  # noqa: SLF001
+                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        variables, strict=strict, log_fn=log_fn, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 643, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %} {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %} {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %} {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+{% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #} {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #} {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+{% set t_base = (Tmin - Text) * Pente + Tmin %} {% set t_corr = t_base + K * (Tcons - Tpie) %} {% if t_corr < Tmin %} {{ Tmin }} {% elif t_corr > Tmax %} {{ Tmax }} {% else %} {{ t_corr|round(1) }} {% endif %}' but no default was specified
+2026-02-14 14:27:06.591 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %} {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %} {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %} {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+{% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #} {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #} {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+{% set t_base = (Tmin - Text) * Pente + Tmin %} {% set t_corr = t_base + K * (Tcons - Tpie) %} {% if t_corr < Tmin %} {{ Tmin }} {% elif t_corr > Tmax %} {{ Tmax }} {% else %} {{ t_corr|round(1) }} {% endif %}' but no default was specified') while processing template 'Template<template=({% set Tmin  = states('input_number.loi_eau_tmin')|float(22) %} {% set Pente = states('input_number.loi_eau_pente')|float(0.5) %} {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %} {% set K     = states('input_number.ambiance_k')|float(2.2) %}
+{% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #} {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #} {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
+{% set t_base = (Tmin - Text) * Pente + Tmin %} {% set t_corr = t_base + K * (Tcons - Tpie) %} {% if t_corr < Tmin %} {{ Tmin }} {% elif t_corr > Tmax %} {{ Tmax }} {% else %} {{ t_corr|round(1) }} {% endif %}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.consigne_eau_virtuelle'
+2026-02-14 14:27:06.591 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'nan' is undefined when rendering '{% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}'
+2026-02-14 14:27:06.591 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 641, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2977, in _render_with_context
+    return template.render(**kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 2, in top-level template code
+jinja2.exceptions.UndefinedError: 'nan' is undefined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 758, in async_render_to_info
+    render_info._result = self.async_render(  # noqa: SLF001
+                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        variables, strict=strict, log_fn=log_fn, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 643, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: UndefinedError: 'nan' is undefined
+2026-02-14 14:27:06.592 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'nan' is undefined when rendering '{% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}'
+2026-02-14 14:27:06.592 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('UndefinedError: 'nan' is undefined') while processing template 'Template<template=({% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.ecart_depart_vs_consigne'
+2026-02-14 14:27:06.593 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {{ (Tint - Text) * H }}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2446, in forgiving_float_filter
+    return float(value)
+ValueError: could not convert string to float: 'unknown'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 641, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2977, in _render_with_context
+    return template.render(**kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2449, in forgiving_float_filter
+    raise_no_default("float", value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1975, in raise_no_default
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {{ (Tint - Text) * H }}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 758, in async_render_to_info
+    render_info._result = self.async_render(  # noqa: SLF001
+                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        variables, strict=strict, log_fn=log_fn, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 643, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {{ (Tint - Text) * H }}' but no default was specified
+2026-02-14 14:27:06.594 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {{ (Tint - Text) * H }}' but no default was specified') while processing template 'Template<template=({% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {{ (Tint - Text) * H }}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.q_th'
+2026-02-14 14:27:06.594 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2446, in forgiving_float_filter
+    return float(value)
+ValueError: could not convert string to float: 'unavailable'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 641, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2977, in _render_with_context
+    return template.render(**kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 2, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2449, in forgiving_float_filter
+    raise_no_default("float", value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1975, in raise_no_default
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Template error: float got invalid input 'unavailable' when rendering template '{% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 758, in async_render_to_info
+    render_info._result = self.async_render(  # noqa: SLF001
+                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        variables, strict=strict, log_fn=log_fn, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 643, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input 'unavailable' when rendering template '{% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified
+2026-02-14 14:27:06.595 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unavailable' when rendering template '{% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified') while processing template 'Template<template=({% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.q_th_valid'
+2026-02-14 14:27:06.596 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template<template=({% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {% set V_l_min = states('input_number.flow_l_min')|float(4) %} {% set V_m3_h = V_l_min * 0.06 %} {% set Q_kW = (H * (Tint - Text)) / 1000 %} {% if V_m3_h > 0 %}
+  {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+{% else %}
+  unknown
+{% endif %}) renders=2>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2446, in forgiving_float_filter
+    return float(value)
+ValueError: could not convert string to float: 'unknown'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 641, in async_render
+    render_result = _render_with_context(self.template, compiled, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2977, in _render_with_context
+    return template.render(**kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 1, in top-level template code
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 2449, in forgiving_float_filter
+    raise_no_default("float", value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 1975, in raise_no_default
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {% set V_l_min = states('input_number.flow_l_min')|float(4) %} {% set V_m3_h = V_l_min * 0.06 %} {% set Q_kW = (H * (Tint - Text)) / 1000 %} {% if V_m3_h > 0 %}
+  {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 758, in async_render_to_info
+    render_info._result = self.async_render(  # noqa: SLF001
+                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        variables, strict=strict, log_fn=log_fn, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/template.py", line 643, in async_render
+    raise TemplateError(err) from err
+homeassistant.exceptions.TemplateError: ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {% set V_l_min = states('input_number.flow_l_min')|float(4) %} {% set V_m3_h = V_l_min * 0.06 %} {% set Q_kW = (H * (Tint - Text)) / 1000 %} {% if V_m3_h > 0 %}
+  {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified
+2026-02-14 14:27:06.597 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unknown' when rendering template '{% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {% set V_l_min = states('input_number.flow_l_min')|float(4) %} {% set V_m3_h = V_l_min * 0.06 %} {% set Q_kW = (H * (Tint - Text)) / 1000 %} {% if V_m3_h > 0 %}
+  {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified') while processing template 'Template<template=({% set H = states('input_number.h_perte_batiment')|float(344) %} {% set Tint = states('sensor.salon_temperature_corrigee')|float %} {% set Text = states('sensor.jardin_temperature_corrigee')|float %} {% set V_l_min = states('input_number.flow_l_min')|float(4) %} {% set V_m3_h = V_l_min * 0.06 %} {% set Q_kW = (H * (Tint - Text)) / 1000 %} {% if V_m3_h > 0 %}
+  {{ (Q_kW / (4.18 * V_m3_h)) | round(2) }}
+{% else %}
+  unknown
+{% endif %}) renders=4>' for attribute '_attr_native_value' in entity 'sensor.delta_eau_modele'
+2026-02-14 14:27:09.076 WARNING (MainThread) [homeassistant.components.ssdp.server] Could not set up UPnP/SSDP server, as a presentation URL could not be determined; Please configure your internal URL in the Home Assistant general configuration
+2026-02-14 14:27:09.077 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - Initializing presets
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - looking for key=frost, preset_name=frost_temp
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - looking for key=eco, preset_name=eco_temp
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - looking for key=comfort, preset_name=comfort_temp
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - looking for key=boost, preset_name=boost_temp
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - After adding presets, preset_modes to ['none', 'frost', 'eco', 'comfort', 'boost']
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - final preset modes ['none', 'frost', 'eco', 'comfort', 'boost']
+2026-02-14 14:27:09.078 WARNING (MainThread) [custom_components.versatile_thermostat.base_thermostat] VersatileThermostat-Thermostat Box Bureau - #1419 - Reapplying current preset eco
+2026-02-14 14:27:09.106 ERROR (MainThread) [homeassistant.components.homekit.util] media_player.tv_samsung_tv does not support any media_player features
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.lum_ext_bureau_10_min as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.depart_bureau as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.arrivee_bureau as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.allumer_sapin as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.eteindre_sapin as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.allumer_biliotheque as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add automation.eteindre_biliotheque as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add binary_sensor.detecteur_presence_occupancy as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add button.zigbee2mqtt_bridge_restart as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add switch.zigbee2mqtt_bridge_permit_join as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_production_d_electricite_actuelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_production_d_energie_du_jour as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_production_d_energie_totale as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_electricite_actuelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_energie_du_jour as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_energie_totale as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_lifetime_balanced_net_energy_consumption as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_energie_actuelle_l1 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_energie_actuelle_l2 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_consommation_d_energie_actuelle_l3 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_lifetime_net_energy_consumption as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_lifetime_net_energy_production as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.envoy_122301074544_current_net_power_consumption as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.114 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000429 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001517 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001929 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001291 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001141 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001152 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001260 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001271 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000341 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001089 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001892 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001038 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001037 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000426 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000017 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001117 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000429_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001517_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001929_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001291_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001141_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001152_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001260_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001271_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000341_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001089_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001892_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001038_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001037_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000426_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323000017_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.inverter_482323001117_dernier_rapport as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add light.couloir as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add switch.charge_voiture as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add switch.chauffe_eau_michelou as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.chauffe_eau_michelou_puissance as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add binary_sensor.diskstation_etat_de_securite as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_utilisation_du_processeur_utilisateur as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_utilisation_du_processeur_totale as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_charge_moyenne_du_processeur_5_min as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_charge_moyenne_du_processeur_15_min as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_utilisation_de_la_memoire_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_memoire_disponible_swap as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_memoire_disponible_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_memoire_totale_swap as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_memoire_totale_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_debit_de_transfert as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_debit_de_telechargement as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_volume_1_etat as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.115 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_volume_1_espace_utilise as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.diskstation_volume_1_volume_utilise as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add switch.pompe30 as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add binary_sensor.ds224plus_etat_de_securite as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_utilisation_du_processeur_utilisateur as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_utilisation_du_processeur_totale as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_charge_moyenne_du_processeur_5_min as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_charge_moyenne_du_processeur_15_min as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_utilisation_de_la_memoire_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_memoire_disponible_espace_d_echange as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_memoire_disponible_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_memoire_totale_espace_d_echange as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_memoire_totale_reelle as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_debit_de_transfert as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_debit_de_telechargement as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_volume_1_etat as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_volume_1_espace_utilise as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.ds224plus_volume_1_volume_utilise as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.116 WARNING (MainThread) [homeassistant.components.homekit] Cannot add sensor.charge_voiture_power as this would exceed the 150 device limit. Consider using the filter option
+2026-02-14 14:27:09.097 ERROR (SyncWorker_4) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/netatmo/__init__.py", line 146, in register_webhook
+    webhook_url = webhook_generate_url(hass, entry.data[CONF_WEBHOOK_ID])
+  File "/usr/src/homeassistant/homeassistant/components/webhook/__init__.py", line 101, in async_generate_url
+    get_url(
+    ~~~~~~~^
+        hass,
+        ^^^^^
+    ...<4 lines>...
+        prefer_external=prefer_external,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/network.py", line 175, in get_url
+    request_host = _get_request_host()
+  File "/usr/src/homeassistant/homeassistant/helpers/network.py", line 217, in _get_request_host
+    raise NoURLAvailableError
+homeassistant.helpers.network.NoURLAvailableError
+2026-02-14 14:32:07.997 ERROR (Thread-3 (_connect)) [root] Uncaught thread exception
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/local/lib/python3.13/threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/RFXtrx/__init__.py", line 1046, in _connect
+    self._connect_internal()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/RFXtrx/__init__.py", line 1074, in _connect_internal
+    event = self.transport.receive_blocking()
+  File "/usr/local/lib/python3.13/site-packages/RFXtrx/__init__.py", line 807, in __errors
+    return func(instance, *args, **kargs)
+  File "/usr/local/lib/python3.13/site-packages/RFXtrx/__init__.py", line 845, in receive_blocking
+    return self._receive_packet()
+           ~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/RFXtrx/__init__.py", line 849, in _receive_packet
+    data = self.serial.read()
+  File "/usr/local/lib/python3.13/site-packages/serial/serialposix.py", line 575, in read
+    buf = os.read(self.fd, size - len(read))
+TypeError: 'NoneType' object cannot be interpreted as an integer
+2026-02-14 14:32:09.163 WARNING (MainThread) [homeassistant.helpers.template] Template variable warning: 'nan' is undefined when rendering '{% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}'
+2026-02-14 14:32:09.164 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('UndefinedError: 'nan' is undefined') while processing template 'Template<template=({% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #} {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %} {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
+  {{ (Tdep - Tcib)|round(1) }}
+{% else %}
+  unknown
+{% endif %}) renders=18>' for attribute '_attr_native_value' in entity 'sensor.ecart_depart_vs_consigne'
+2026-02-14 14:32:09.164 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unavailable' when rendering template '{% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}' but no default was specified') while processing template 'Template<template=({% set Pmin = states('input_number.power_on_threshold')|float(2) %} {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %} {% set dTeau = states('sensor.suivipac_temppac_diff')|float %} {% if P >= Pmin %}
+  {{ states('sensor.q_th')|float }}
+{% else %}
+  unknown
+{% endif %}) renders=32>' for attribute '_attr_native_value' in entity 'sensor.q_th_valid'
+2026-02-14 14:32:09.164 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('ValueError: Template error: float got invalid input 'unavailable' when rendering template '{% set d_meas = states('sensor.suivipac_temppac_diff')|float %} {% set d_model = states('sensor.delta_eau_modele')|float(0) %} {{ (d_meas - d_model) | round(2) }}' but no default was specified') while processing template 'Template<template=({% set d_meas = states('sensor.suivipac_temppac_diff')|float %} {% set d_model = states('sensor.delta_eau_modele')|float(0) %} {{ (d_meas - d_model) | round(2) }}) renders=22>' for attribute '_attr_native_value' in entity 'sensor.delta_eau_ecart'

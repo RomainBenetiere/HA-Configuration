@@ -1,0 +1,83 @@
+# /config/packages/temp_jardin_env.yaml
+# Helpers de calibration (jardin)
+input_number:
+  cal_jardin_t_gain:   { name: "Cal jardin T – gain",   min: 0.80, max: 1.20, step: 0.0001, mode: box }
+  cal_jardin_t_offset: { name: "Cal jardin T – offset", min: -5,   max: 5,    step: 0.001,  mode: box }
+  cal_jardin_rh_gain:  { name: "Cal jardin RH – gain",  min: 0.80, max: 1.20, step: 0.0001, mode: box }
+  cal_jardin_rh_offset: { name: "Cal jardin RH – offset", min: -20,  max: 20,   step: 0.01,   mode: box }
+
+# Capteurs dérivés (jardin) — remplace les deux entités brutes ci-dessous si besoin
+template:
+  - sensor:
+      - name: "jardin – Humidité corrigée"
+        unique_id: jardin_rh_corr
+        device_class: humidity
+        unit_of_measurement: "%"
+        state_class: measurement
+        availability: >
+          {{ is_number(states('sensor.temp_hr_jardin_humidite')) }}
+        state: >
+          {% set RH = states('sensor.temp_hr_jardin_humidite') | float(0) %}
+          {% set aRH = states('input_number.cal_jardin_rh_gain')   | float(1) %}
+          {% set bRH = states('input_number.cal_jardin_rh_offset') | float(0) %}
+          {% set x = aRH*RH + bRH %}
+          {% set rhc = 0 if x < 0 else (100 if x > 100 else x) %}
+          {{ rhc | round(1) }}
+
+      - name: "jardin – Température corrigée"
+        unique_id: jardin_t_corr
+        device_class: temperature
+        unit_of_measurement: "°C"
+        state_class: measurement
+        availability: >
+          {{ states('sensor.temp_hr_jardin_temperature') not in ['unknown','unavailable'] }}
+        state: >
+          {% set T  = states('sensor.temp_hr_jardin_temperature') | float(0) %}
+          {% set aT = states('input_number.cal_jardin_t_gain')   | float(1) %}
+          {% set bT = states('input_number.cal_jardin_t_offset') | float(0) %}
+          {% set Tc = aT*T + bT %}
+          {{ Tc | round(2) }}
+
+      - name: "jardin – Point de rosée"
+        unique_id: jardin_td
+        device_class: temperature
+        unit_of_measurement: "°C"
+        state_class: measurement
+        state: >
+          {% set T  = states('sensor.temp_hr_jardin_temperature') | float(0) %}
+          {% set RH = states('sensor.temp_hr_jardin_humidite')    | float(0) %}
+          {% set aT = states('input_number.cal_jardin_t_gain')   | float(1) %}
+          {% set bT = states('input_number.cal_jardin_t_offset') | float(0) %}
+          {% set aRH= states('input_number.cal_jardin_rh_gain')  | float(1) %}
+          {% set bRH= states('input_number.cal_jardin_rh_offset')| float(0) %}
+          {% set Tc  = aT*T + bT %}
+          {% set x = aRH*RH + bRH %}
+          {% set rhc = 0 if x < 0 else (100 if x > 100 else x) %}
+          {% if rhc>0 and rhc<=100 %}
+            {% set a = 17.62 %}
+            {% set b = 243.12 %}
+            {% set gamma = log(rhc/100.0) + (a*Tc)/(b+Tc) %}
+            {% set Tr = (b*gamma/(a-gamma)) %}
+            {{ Tr | round(2) }}
+          {% else %} unknown {% endif %}
+          
+      - name: "jardin – Humidité absolue"
+        unique_id: jardin_ah
+        unit_of_measurement: "g/m³"
+        state_class: measurement
+        state: >
+          {% set T  = states('sensor.temp_hr_jardin_temperature') | float(0) %}
+          {% set RH = states('sensor.temp_hr_jardin_humidite')    | float(0) %}
+          {% set aT = states('input_number.cal_jardin_t_gain')   | float(1) %}
+          {% set bT = states('input_number.cal_jardin_t_offset') | float(0) %}
+          {% set aRH= states('input_number.cal_jardin_rh_gain')  | float(1) %}
+          {% set bRH= states('input_number.cal_jardin_rh_offset')| float(0) %}
+          {% set Tc  = aT*T + bT %}
+          {% set x = aRH*RH + bRH %}
+          {% set rhc = 0 if x < 0 else (100 if x > 100 else x) %}
+          {% if rhc>0 and rhc<=100 %}
+            {% set es = 6.112 * (e ** ((17.67*Tc)/(Tc+243.5))) %}
+            {% set e_act  = es * rhc/100.0 %}
+            {% set ha = (216.7 * (e_act / (Tc + 273.15))) %}
+            {{ ha | round(2) }}
+          {% else %} unknown {% endif %}
