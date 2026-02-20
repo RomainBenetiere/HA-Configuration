@@ -1,15 +1,21 @@
+# ignore tout
 *
+
+# ré-autoriser certains fichiers
 !*.yaml
 !*.yml
 !*.md
+!*.json
+!*.py
 !.gitignore
 
-# fichiers à exclure
+# exclure toujours les vrais secrets / logs / DB
 secrets.yaml
-ip_bans.yaml
-known_devices.yaml
 home-assistant_v2.db
 home-assistant.log
 .storage
 .cloud
 .google.token
+ip_bans.yaml
+known_devices.yaml
+

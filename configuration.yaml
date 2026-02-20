@@ -36,8 +36,8 @@ alexa:
   smart_home:
     locale: fr-FR
     endpoint: https://api.eu.amazonalexa.com/v3/events
-    client_id: amzn1.application-oa2-client.4f18ecea3174423192bba7ef2bac267f
-    client_secret: amzn1.oa2-cs.v1.b549e58e391d268141a209a5a9f80a7d8adb10a798faa3bcf1e23d1b75b3d458
+    client_id: !secret amazon_client_id
+    client_secret: !secret amazon_client_secret
 
 mqtt: !include mqtt.yaml
 
