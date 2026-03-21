@@ -89,33 +89,6 @@
         action: light.turn_off
         data: {}
   mode: single
-- id: '1705436833717'
-  alias: Chauffage_Box_Absent
-  description: ''
-  triggers:
-  - topic: Box-Garage/Bureau/Radiateur
-    payload: Absent
-    trigger: mqtt
-  conditions: []
-  actions:
-  - type: turn_on
-    device_id: c203367dac01dfd336b26690a5cc1811
-    entity_id: 2afee76a49c90a44a3ea85ad995356a9
-    domain: switch
-  mode: single
-- id: '1705436870088'
-  alias: Chauffage_Box_Confort
-  description: ''
-  triggers:
-  - topic: Box-Garage/Bureau/Radiateur
-    payload: Confort
-    trigger: mqtt
-  conditions: []
-  actions:
-  - type: turn_off
-    device_id: c203367dac01dfd336b26690a5cc1811
-    entity_id: 2afee76a49c90a44a3ea85ad995356a9
-    domain: switch
 - id: '1724310675473'
   alias: charge_start
   description: Charge Voiture Elec
@@ -759,4 +732,62 @@
     domain: rfxtrx
     type: send_command
     subtype: 'Off'
+  mode: single
+- id: '1772274974341'
+  alias: Chauffage Bureau
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - calendar.chauffage_bureau
+  - trigger: state
+    entity_id:
+    - calendar.chauffage_absence
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: calendar.chauffage_absence
+        state:
+        - 'off'
+      - condition: state
+        entity_id: calendar.chauffage_bureau
+        state:
+        - 'on'
+      sequence:
+      - action: climate.set_preset_mode
+        metadata: {}
+        target:
+          entity_id: climate.thermostat_box_bureau
+        data:
+          preset_mode: comfort
+    - conditions:
+      - condition: state
+        entity_id: calendar.chauffage_absence
+        state:
+        - 'off'
+      - condition: state
+        entity_id: calendar.chauffage_bureau
+        state:
+        - 'off'
+      sequence:
+      - action: climate.set_preset_mode
+        metadata: {}
+        target:
+          entity_id: climate.thermostat_box_bureau
+        data:
+          preset_mode: eco
+    - conditions:
+      - condition: state
+        entity_id: calendar.chauffage_absence
+        state:
+        - 'on'
+      sequence:
+      - action: climate.set_preset_mode
+        metadata: {}
+        target:
+          entity_id: climate.thermostat_box_bureau
+        data:
+          preset_mode: frost
   mode: single

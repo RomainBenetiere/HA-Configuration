@@ -5,7 +5,7 @@
         "step": {
             "user": {
                 "title": "Tipo di Versatile Thermostat",
-                "description": "Scegliere il tipo di termostato che si desidera creare&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/creation.md)",
+                "description": "Scegliere il tipo di termostato che si desidera creare",
                 "data": {
                     "thermostat_type": "Tipo di termostato"
                 },
@@ -50,12 +50,13 @@
                     "lock_automations": "Il blocco impedirà i comandi delle automazioni e delle integrazioni (ad es. pianificatore)"
                 },
                 "data_description": {
-                    "use_lock_central_config": "Selezionare per utilizzare la configurazione di blocco centrale. Deselezionare per utilizzare una configurazione di blocco specifica per questo VTherm"
+                    "use_lock_central_config": "Selezionare per utilizzare la configurazione di blocco centrale. Deselezionare per utilizzare una configurazione di blocco specifica per questo VTherm",
+                    "lock_code": "Il codice PIN per sbloccare il termostato (4 cifre)"
                 }
             },
             "main": {
                 "title": "Nuovo Versatile Thermostat",
-                "description": "Principali attributi obbligatori&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/base-attributes.md)",
+                "description": "Principali attributi obbligatori",
                 "data": {
                     "name": "Nome",
                     "thermostat_type": "Tipo di termostato",
@@ -96,7 +97,7 @@
             },
             "type": {
                 "title": "Entità collegate",
-                "description": "Attributi delle entità collegate&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/over-switch.md#configuration)",
+                "description": "Attributi delle entità collegate",
                 "data": {
                     "underlying_entity_ids": "Dispositivo(i) da controllare",
                     "heater_keep_alive": "Intervallo di mantenimento della connessione in secondi",
@@ -131,7 +132,7 @@
             },
             "tpi": {
                 "title": "TPI",
-                "description": "Attributi dell'integrale proporzionale al tempo (TPI)&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/algorithms.md#lalgorithme-tpi)",
+                "description": "Attributi dell'integrale proporzionale al tempo (TPI)",
                 "data": {
                     "tpi_coef_int": "coef_int",
                     "tpi_coef_ext": "coef_ext",
@@ -155,14 +156,14 @@
             },
             "presets": {
                 "title": "Preimpostazioni",
-                "description": "Selezionare se il termostato utilizzerà le impostazioni centralizzate predefinite - deselezionare per consentire al termostato di avere le proprie impostazioni predefinite&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-presets.md)",
+                "description": "Selezionare se il termostato utilizzerà le impostazioni centralizzate predefinite - deselezionare per consentire al termostato di avere le proprie impostazioni predefinite",
                 "data": {
                     "use_presets_central_config": "Utilizzare preimpostazioni centralizzate"
                 }
             },
             "window": {
                 "title": "Gestione finestra aperta",
-                "description": "Gestione finestra aperta.\nÈ possibile configurare il rilevamento automatico dell'apertura delle finestre in base alla diminuzione della temperatura&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-window.md)",
+                "description": "Gestione finestra aperta.\nÈ possibile configurare il rilevamento automatico dell'apertura delle finestre in base alla diminuzione della temperatura",
                 "data": {
                     "window_sensor_entity_id": "Entity id del sensore finestra",
                     "window_delay": "Ritardo di attivazione sensore finestra (secondi)",
@@ -186,7 +187,7 @@
             },
             "motion": {
                 "title": "Gestione movimento",
-                "description": "Gestione del sensore di movimento. L'impostazione predefinita può cambiare automaticamente in base al rilevamento del movimento\nPreimpostazione movimento e Preimpostazione no-movimento devono essere impostati sul nome del preset corrispondente&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-motion.md)",
+                "description": "Gestione del sensore di movimento. L'impostazione predefinita può cambiare automaticamente in base al rilevamento del movimento\nPreimpostazione movimento e Preimpostazione no-movimento devono essere impostati sul nome del preset corrispondente",
                 "data": {
                     "motion_sensor_entity_id": "Entity id del sensore di movimento",
                     "motion_delay": "Ritardo di attivazione",
@@ -206,7 +207,7 @@
             },
             "power": {
                 "title": "Gestione energetica",
-                "description": "Attributi di gestione dell'eneregia elettrica.\nIndica la potenza e il sensore della potenza massima della tua abitazione.\nSpecifica il consumo energetico del riscaldatore quando è acceso.\nTutti i sensori e l'alimentazione dei dispositivi devono utilizzare la stessa unità di misura (kW o W)&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-power.md)",
+                "description": "Attributi di gestione dell'eneregia elettrica.\nIndica la potenza e il sensore della potenza massima della tua abitazione.\nSpecifica il consumo energetico del riscaldatore quando è acceso.\nTutti i sensori e l'alimentazione dei dispositivi devono utilizzare la stessa unità di misura (kW o W)",
                 "data": {
                     "power_sensor_entity_id": "Potenza",
                     "max_power_sensor_entity_id": "Potenza massima",
@@ -222,7 +223,7 @@
             },
             "presence": {
                 "title": "Gestione presenza",
-                "description": "Attributi di gestione della presenza.\nFornisce un sensore di presenza della tua casa (vero se qualcuno è presente) e fornisce l'impostazione predefinita della temperatura corrispondente&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-presence.md)",
+                "description": "Attributi di gestione della presenza.\nFornisce un sensore di presenza della tua casa (vero se qualcuno è presente) e fornisce l'impostazione predefinita della temperatura corrispondente",
                 "data": {
                     "presence_sensor_entity_id": "Sensore di presenza",
                     "use_presence_central_config": "Utilizza la configurazione centralizzata della temperatura in presenza. Deseleziona per utilizzare entità di temperatura specifiche."
@@ -233,7 +234,7 @@
             },
             "advanced": {
                 "title": "Parametri avanzati",
-                "description": "Configurazione dei parametri avanzati. Lascia i valori predefiniti se non sai cosa stai facendo.\nQuesti parametri possono causare un controllo della temperatura molto scarso o una cattiva regolazione della potenza&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-advanced.md)",
+                "description": "Configurazione dei parametri avanzati. Lascia i valori predefiniti se non sai cosa stai facendo.\nQuesti parametri possono causare un controllo della temperatura molto scarso o una cattiva regolazione della potenza",
                 "data": {
                     "safety_delay_min": "Ritardo di sicurezza (in minuti)",
                     "safety_min_on_percent": "Percentuale minima di potenza per attivare la modalità di sicurezza",
@@ -249,7 +250,7 @@
             },
             "central_boiler": {
                 "title": "Controllo della caldaia centralizzata",
-                "description": "Inserisci i servizi da chiamare per accendere/spegnere la caldaia centralizzata. Il servizio chiamato deve essere formattato come segue: `entity_id/nome_servizi[/attributo:valore]` (/attributo:valore è facoltativo)\nAd esempio:\n- per accendere un interruttore: `switch.controle_chaudiere/switch.turn_on`\n- per spegnere un interruttore: `switch.controle_chaudiere/switch.turn_off`\n- per programmare la caldaia a 25° e quindi forzarne l'accensione: `climate.thermostat_chaudiere/climate.set_temperature/temperature:25`\n- per inviare 10° alla caldaia e quindi forzarne lo spegnimento: `climate. thermostat_chaudiere/climate.set_temperature/temperature:10`&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-central-boiler.md)",
+                "description": "Inserisci i servizi da chiamare per accendere/spegnere la caldaia centralizzata. Il servizio chiamato deve essere formattato come segue: `entity_id/nome_servizi[/attributo:valore]` (/attributo:valore è facoltativo)\nAd esempio:\n- per accendere un interruttore: `switch.controle_chaudiere/switch.turn_on`\n- per spegnere un interruttore: `switch.controle_chaudiere/switch.turn_off`\n- per programmare la caldaia a 25° e quindi forzarne l'accensione: `climate.thermostat_chaudiere/climate.set_temperature/temperature:25`\n- per inviare 10° alla caldaia e quindi forzarne lo spegnimento: `climate. thermostat_chaudiere/climate.set_temperature/temperature:10`",
                 "data": {
                     "central_boiler_activation_service": "Comando per accendere",
                     "central_boiler_deactivation_service": "Comando per spegnere",
@@ -263,7 +264,7 @@
             },
             "valve_regulation": {
                 "title": "Auto-regolazione con valvola",
-                "description": "Configurazione per l'autoregolazione con controllo diretto della valvola&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/self-regulation.md# auto-regolazione-tramite-controllo-diretto-della-valvola)",
+                "description": "Configurazione per l'autoregolazione con controllo diretto della valvola",
                 "data": {
                     "offset_calibration_entity_ids": "Entità di calibrazione offset",
                     "opening_degree_entity_ids": "Entità del grado di apertura",
@@ -294,15 +295,17 @@
                     "heater_cooling_time": "Tempo raffrescamento (min)",
                     "auto_tpi_heating_rate": "Velocità di riscaldamento ({unit}/h)",
                     "auto_tpi_aggressiveness": "Aggressività",
-                    "auto_tpi_enable_advanced_settings": "Abilita paramnetri avanzati"
+                    "auto_tpi_enable_advanced_settings": "Abilita paramnetri avanzati",
+                    "auto_tpi_continuous_kext": "Apprendimento continuo di Kext"
                 },
                 "data_description": {
                     "auto_tpi_learning_type": "Scegliere “Discovery” per l'avvio iniziale (media ponderata, peso 1) o “Regolazione fine” per le regolazioni continue (EWMA, Alpha 0,08).",
                     "heater_heating_time": "Tempo necessario per raggiungere la piena potenza (minuti)",
                     "heater_cooling_time": "Tempo di raffreddamento dopo l'arresto (minuti)\n\n| Tipo | Tempo di riscaldamento | Tempo di raffreddamento |\n| :--- | :--- | :--- |\n| Radiatore elettrico | 5 min | 7 min |\n| Radiatore ad acqua | 15 min | 20 min |\n| Riscaldamento a pavimento | 30 min | 45 min |",
-                    "auto_tpi_heating_rate": "Capacità di aumento della temperatura del radiatore ({unità} all'ora). Lasciare a 0 per l'apprendimento automatico (bootstrap).",
+                    "auto_tpi_heating_rate": "Capacità di aumento della temperatura del radiatore ({unit} all'ora). Lasciare a 0 per l'apprendimento automatico (bootstrap).",
                     "auto_tpi_aggressiveness": "Fattore di riduzione per i coefficienti appresi (50-100%). Valori inferiori determinano coefficienti più conservativi e riducono il rischio di sovra-riscaldamento.",
-                    "auto_tpi_enable_advanced_settings": "Controlla per accedere alla regolazione fine dei parametri (Alpha, Decadimento, Peso)."
+                    "auto_tpi_enable_advanced_settings": "Controlla per accedere alla regolazione fine dei parametri (Alpha, Decadimento, Peso).",
+                    "auto_tpi_continuous_kext": "Selezionare per attivare la regolazione continua del coefficiente esterno (Kext) al di fuori della sessione AutoTPI."
                 }
             },
             "auto_tpi_avg_settings": {
@@ -320,16 +323,18 @@
                 "description": "Parametri per il metodo EWMA.\n\nRaccomandazioni:\n| Situazione | Alpha (ema_alpha) | Tasso di decadimento (ema_decay_rate) |\n| :--- | :--- | :--- |\n| Apprendimento iniziale | 0,15 | 0,08 |\n| Apprendimento fine | 0,08 | 0,12 |\n| Apprendimento continuo | 0,05 | 0,02 |",
                 "data": {
                     "auto_tpi_ema_alpha": "Alpha",
-                    "auto_tpi_ema_decay_rate": "Tasso di decadimento"
+                    "auto_tpi_ema_decay_rate": "Tasso di decadimento",
+          "auto_tpi_continuous_kext_alpha": "Alpha Apprendimento continuo"
                 },
                 "data_description": {
                     "auto_tpi_ema_alpha": "Fattore di livellamento (0-1). Più alto = adattamento più rapido",
-                    "auto_tpi_ema_decay_rate": "Tasso di diminuzione di Alpha nel tempo (stabilizzazione)"
+                    "auto_tpi_ema_decay_rate": "Tasso di diminuzione di Alpha nel tempo (stabilizzazione)",
+                    "auto_tpi_continuous_kext_alpha": "Fattore di livellamento per l'apprendimento continuo (Alpha). Impostazione predefinita 0,04 (adattamento circa 3-5 giorni)."
                 }
             },
             "sync_device_internal_temp": {
                 "title": "Sincronizza la temperatura interna del dispositivo",
-                "description": "Configurazione per sincronizzare la temperatura interna dei dispositivi sottostanti con entità selezionate&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-sync_device_temp.md)",
+                "description": "Configurazione per sincronizzare la temperatura interna dei dispositivi sottostanti con entità selezionate",
                 "data": {
                     "sync_with_calibration": "Applicare la calibrazione dell'offset",
                     "sync_entity_ids": "Entity ID utilizzati per la sincronizzazione"
@@ -384,7 +389,7 @@
         "step": {
             "user": {
                 "title": "Tipo - {name}",
-                "description": "Scegliere il tipo di termostato che si desidera creare&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/creation.md)",
+                "description": "Scegliere il tipo di termostato che si desidera creare",
                 "data": {
                     "thermostat_type": "Tipo di termostato"
                 },
@@ -411,9 +416,9 @@
                     "valve_regulation": "Configurazione della regolazione della valvola",
                     "sync_device_internal_temp": "Sincronizza la temperatura del dispositivo",
                     "lock": "Gestione del blocco",
-                    "finalize": "Fatto",
-                    "configuration_not_complete": "Configurazione non completata",
-                    "heating_failure_detection": "Rilevamento guasti riscaldamento"
+                    "heating_failure_detection": "Rilevamento guasti al riscaldamento",
+                    "finalize": "Finalizza le modifiche",
+                    "configuration_not_complete": "Configurazione non completata"
                 }
             },
             "lock": {
@@ -431,7 +436,7 @@
             },
             "main": {
                 "title": "Principale - {name}",
-                "description": "Principali attributi obbligatori&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/base-attributes.md)",
+                "description": "Principali attributi obbligatori",
                 "data": {
                     "name": "Nome",
                     "thermostat_type": "Tipo di termostato",
@@ -472,7 +477,7 @@
             },
             "type": {
                 "title": "Carateristiche - {name}",
-                "description": "Attributi delle entità collegate&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/over-switch.md#configuration)",
+                "description": "Attributi delle entità collegate",
                 "data": {
                     "underlying_entity_ids": "Dispositivo(i) da controllare",
                     "heater_keep_alive": "Intervallo di mantenimento della connessione in secondi",
@@ -507,7 +512,7 @@
             },
             "tpi": {
                 "title": "TPI - {name}",
-                "description": "Attributi dell'integrale proporzionale al tempo&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/algorithms.md#lalgorithme-tpi)",
+                "description": "Attributi dell'integrale proporzionale al tempo",
                 "data": {
                     "tpi_coef_int": "coef_int",
                     "tpi_coef_ext": "coef_ext",
@@ -516,7 +521,8 @@
                     "use_tpi_central_config": "Utilizzare configurazione TPI centralizzata",
                     "minimal_activation_delay": "Ritardo minimo di attivazione",
                     "minimal_deactivation_delay": "Ritardo minimo di disattivazione",
-                    "auto_tpi_mode": "Enable Auto TPI Learning"
+                    "use_tpi_central_config": "Utilizzare la configuration TPI centralizzata",
+                    "auto_tpi_mode": "Abilita Auto apprendimento TPI"
                 },
                 "data_description": {
                     "tpi_coef_int": "Coefficiente da utilizzare per il delta della temperatura interna",
@@ -531,14 +537,14 @@
             },
             "presets": {
                 "title": "Preimpostazioni - {name}",
-                "description": "Selezionare se il termostato utilizza le impostazioni predefinite centralizzate. Deselezionare se il termostato ha le proprie entità predefinite&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-presets.md)",
+                "description": "Selezionare se il termostato utilizza le impostazioni predefinite centralizzate. Deselezionare se il termostato ha le proprie entità predefinite",
                 "data": {
                     "use_presets_central_config": "Utilizzare preimpostazioni centralizzate"
                 }
             },
             "window": {
                 "title": "Finestra - {name}",
-                "description": "Gestione finestra aperta.\nÈ possibile configurare il rilevamento automatico dell'apertura delle finestre in base alla diminuzione della temperatura&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-window.md)",
+                "description": "Gestione finestra aperta.\nÈ possibile configurare il rilevamento automatico dell'apertura delle finestre in base alla diminuzione della temperatura",
                 "data": {
                     "window_sensor_entity_id": "Entity id del sensore finestra",
                     "window_delay": "Ritardo di attivazione sensore finestra (secondi)",
@@ -562,7 +568,7 @@
             },
             "motion": {
                 "title": "Movimento - {name}",
-                "description": "Gestione del movimento. L'impostazione predefinita può cambiare automaticamente in base al rilevamento del movimento\nPreimpostazione movimento e Preimpostazione no-movimento devono essere impostati sul nome del preset corrispondente&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-motion.md)",
+                "description": "Gestione del movimento. L'impostazione predefinita può cambiare automaticamente in base al rilevamento del movimento\nPreimpostazione movimento e Preimpostazione no-movimento devono essere impostati sul nome del preset corrispondente",
                 "data": {
                     "motion_sensor_entity_id": "Entity id del sensore di movimento",
                     "motion_delay": "Ritardo di attivazione",
@@ -582,7 +588,7 @@
             },
             "power": {
                 "title": "Potenza- {name}",
-                "description": "Attributi di gestione dell'eneregia elettrica.\nIndica la potenza e il sensore della potenza massima della tua abitazione.\nSpecifica il consumo energetico del riscaldatore quando è acceso.\nTutti i sensori e l'alimentazione dei dispositivi devono utilizzare la stessa unità di misura (kW o W)&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-power.md)",
+                "description": "Attributi di gestione dell'eneregia elettrica.\nIndica la potenza e il sensore della potenza massima della tua abitazione.\nSpecifica il consumo energetico del riscaldatore quando è acceso.\nTutti i sensori e l'alimentazione dei dispositivi devono utilizzare la stessa unità di misura (kW o W)",
                 "data": {
                     "power_sensor_entity_id": "Potenza",
                     "max_power_sensor_entity_id": "Potenza massima",
@@ -598,7 +604,7 @@
             },
             "presence": {
                 "title": "Presenza - {name}",
-                "description": "Attributi di gestione della presenza.\nFornisce un sensore di presenza della tua casa (vero se qualcuno è presente) e fornisce l'impostazione predefinita della temperatura corrispondente&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-presence.md)",
+                "description": "Attributi di gestione della presenza.\nFornisce un sensore di presenza della tua casa (vero se qualcuno è presente) e fornisce l'impostazione predefinita della temperatura corrispondente",
                 "data": {
                     "presence_sensor_entity_id": "Sensore di presenza",
                     "use_presence_central_config": "Utilizza la configurazione centralizzata della temperatura in presenza. Deseleziona per utilizzare entità di temperatura specifiche."
@@ -609,7 +615,7 @@
             },
             "advanced": {
                 "title": "Avanzate - {name}",
-                "description": "Configurazione dei parametri avanzati. Lascia i valori predefiniti se non sai cosa stai facendo.\nQuesti parametri possono causare un controllo della temperatura molto scarso o una cattiva regolazione della potenza&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-advanced.md)",
+                "description": "Configurazione dei parametri avanzati. Lascia i valori predefiniti se non sai cosa stai facendo.\nQuesti parametri possono causare un controllo della temperatura molto scarso o una cattiva regolazione della potenza",
                 "data": {
                     "minimal_activation_delay": "Ritardo minimo di attivazione",
                     "minimal_deactivation_delay": "Ritardo minimo di disattivazione",
@@ -629,7 +635,7 @@
             },
             "central_boiler": {
                 "title": "Controllo della caldaia centralizzata - {name}",
-                "description": "Inserire i servizi da chiamare per accendere/spegnere la caldaia centralizzata. Il servizio chiamato deve essere formattato come segue: `entity_id/nome_servizi[/attributo:valore]` (/attributo:valore è facoltativo)\nAd esempio:\n- per accendere un interruttore: `switch.controle_chaudiere/switch.turn_on`\n- per spegnere un interruttore: `switch.controle_chaudiere/switch.turn_off`\n- per programmare la caldaia a 25° e quindi forzarne l'accensione: `climate.thermostat_chaudiere/climate.set_temperature/temperature:25`\n- per inviare 10° alla caldaia e quindi forzarne lo spegnimento: `climate. thermostat_chaudiere/climate.set_temperature/temperature:10`&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-central-boiler.md)",
+                "description": "Inserire i servizi da chiamare per accendere/spegnere la caldaia centralizzata. Il servizio chiamato deve essere formattato come segue: `entity_id/nome_servizi[/attributo:valore]` (/attributo:valore è facoltativo)\nAd esempio:\n- per accendere un interruttore: `switch.controle_chaudiere/switch.turn_on`\n- per spegnere un interruttore: `switch.controle_chaudiere/switch.turn_off`\n- per programmare la caldaia a 25° e quindi forzarne l'accensione: `climate.thermostat_chaudiere/climate.set_temperature/temperature:25`\n- per inviare 10° alla caldaia e quindi forzarne lo spegnimento: `climate. thermostat_chaudiere/climate.set_temperature/temperature:10`",
                 "data": {
                     "central_boiler_activation_service": "Comando per accendere",
                     "central_boiler_deactivation_service": "Comando per spegnere",
@@ -643,7 +649,7 @@
             },
             "valve_regulation": {
                 "title": "Auto-regolazione con valvola - {name}",
-                "description": "Configurazione per l'autoregolazione con controllo diretto della valvola&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/self-regulation.md# auto-regolazione-tramite-controllo-diretto-della-valvola)",
+                "description": "Configurazione per l'autoregolazione con controllo diretto della valvola",
                 "data": {
                     "offset_calibration_entity_ids": "Entità di calibrazione offset",
                     "opening_degree_entity_ids": "Entità del grado di apertura",
@@ -665,40 +671,30 @@
                     "max_closing_degree": "Valore massimo del grado di chiusura. La valvola non sarà mai chiusa più di questo valore. Impostare a 100 per chiudere completamente la valvola"
                 }
             },
-            "sync_device_internal_temp": {
-                "title": "Synchronize device internal temperature",
-                "description": "Configuration to synchronize the internal temperature of the underlying devices with selected entities&nbsp;[![?](https://img.icons8.com/color/18/help.png)](https://github.com/jmcollin78/versatile_thermostat/blob/main/documentation/en/feature-sync_device_temp.md)",
-                "data": {
-                    "sync_with_calibration": "Apply offset calibration",
-                    "sync_entity_ids": "Entities id used for synchronization"
-                },
-                "data_description": {
-                    "sync_with_calibration": "Check to apply the offset calibration when synchronizing the internal temperature. Uncheck to directly copy the temperature from the selected entities",
-                    "sync_entity_ids": "The list of the entities used to synchronize the internal temperature of the underlying devices. There should be one per underlying device. Should be a calibration entity if checkbox is selected or a temperature entity otherwise. Both are `number` entities."
-                }
-            },
             "auto_tpi_configuration": {
-                "title": "Auto TPI - Configurazione - {nome}",
+                "title": "Auto TPI - Configurazione - {name}",
                 "description": "Impostazioni generali per l'apprendimento automatico del TPI.",
                 "data": {
                     "auto_tpi_learning_type": "Tipo di apprendimento",
-                    "auto_tpi_heating_rate": "Velocità di riscaldamento ({unità}/h)",
+                    "auto_tpi_heating_rate": "Velocità di riscaldamento ({unit}/h)",
                     "heater_heating_time": "Tempo di riscaldamento (min)",
                     "heater_cooling_time": "Tempo di raffrescamento (min)",
                     "auto_tpi_aggressiveness": "Aggressività",
-                    "auto_tpi_enable_advanced_settings": "Abilita parametri avanzati"
+                    "auto_tpi_enable_advanced_settings": "Abilita parametri avanzati",
+                    "auto_tpi_continuous_kext": "Apprendimento continuo di Kext"
                 },
                 "data_description": {
                     "auto_tpi_learning_type": "Scegliere “Discovery” per l'avvio iniziale (media ponderata, peso 1) o “Fine Tuning” per le regolazioni continue (EWMA, Alpha 0,08).",
-                    "auto_tpi_heating_rate": "Capacità di aumento della temperatura del radiatore ({unità} all'ora). Lasciare a 0 per l'apprendimento automatico (bootstrap).",
+                    "auto_tpi_heating_rate": "Capacità di aumento della temperatura del radiatore ({unit} all'ora). Lasciare a 0 per l'apprendimento automatico (bootstrap).",
                     "heater_heating_time": "Tempo necessario per raggiungere la piena potenza (minuti)",
                     "heater_cooling_time": "Tempo di raffreddamento dopo l'arresto (minuti)\n\n| Tipo | Tempo di riscaldamento | Tempo di raffreddamento |\n| :--- | :--- | :--- |\n| Radiatore elettrico | 5 min | 7 min |\n| Radiatore ad acqua | 15 min | 20 min |\n| Riscaldamento a pavimento | 30 min | 45 min |",
                     "auto_tpi_aggressiveness": "Fattore di riduzione per i coefficienti appresi (50-100%). Valori inferiori determinano coefficienti più conservativi e riducono il rischio di sovrariscaldamento.",
-                    "auto_tpi_enable_advanced_settings": "Controlla per modificare i parametri dell'algoritmo scelto."
+                    "auto_tpi_enable_advanced_settings": "Controlla per modificare i parametri dell'algoritmo scelto.",
+                    "auto_tpi_continuous_kext": "Selezionare per attivare la regolazione continua del coefficiente esterno (Kext) al di fuori della sessione AutoTPI."
                 }
             },
             "auto_tpi_avg_settings": {
-                "title": "Auto TPI - Media ponderata - {nome}",
+                "title": "Auto TPI - Media ponderata - {name}",
                 "description": "Parametri per il metodo della media ponderata.",
                 "data": {
                     "auto_tpi_avg_initial_weight": "Peso iniziale"
@@ -708,15 +704,29 @@
                 }
             },
             "auto_tpi_ema_settings": {
-                "title": "Auto TPI - EWMA - {nome}",
+                "title": "Auto TPI - EWMA - {name}",
                 "description": "Parametri per il metodo EWMA.\n\nRaccomandazioni:\n| Situazione | Alpha (ema_alpha) | Tasso di decadimento (ema_decay_rate) |\n| :--- | :--- | :--- |\n| Regolazioni significative | 0,15 | 0,08 |\n| Regolazioni di precisione | 0,08 | 0,12 |",
                 "data": {
-                    "auto_tpi_ema_alpha": "Alpha",
-                    "auto_tpi_ema_decay_rate": "Tasso di decadimento"
+                  "auto_tpi_ema_alpha": "Alpha",
+                  "auto_tpi_ema_decay_rate": "Tasso di decadimento",
+                  "auto_tpi_continuous_kext_alpha": "Alfa Apprendimento continuo"
                 },
                 "data_description": {
-                    "auto_tpi_ema_alpha": "Fattore di livellamento (0-1). Più alto = adattamento più rapido",
-                    "auto_tpi_ema_decay_rate": "Tasso di diminuzione di Alpha nel tempo (stabilizzazione)"
+                  "auto_tpi_ema_alpha": "Fattore di livellamento (0-1). Più alto = adattamento più rapido",
+                  "auto_tpi_ema_decay_rate": "Tasso di diminuzione di Alpha nel tempo (stabilizzazione)",
+                  "auto_tpi_continuous_kext_alpha": "Fattore di livellamento per l'apprendimento continuo (Alpha). Impostazione predefinita 0,04 (adattamento circa 3-5 giorni)."
+                }
+              },
+              "sync_device_internal_temp": {
+                "title": "Synchronize device internal temperature",
+                "description": "Configuration to synchronize the internal temperature of the underlying devices with selected entities",
+                "data": {
+                    "sync_with_calibration": "Apply offset calibration",
+                    "sync_entity_ids": "Entities id used for synchronization"
+                },
+                "data_description": {
+                    "sync_with_calibration": "Check to apply the offset calibration when synchronizing the internal temperature. Uncheck to directly copy the temperature from the selected entities",
+                    "sync_entity_ids": "The list of the entities used to synchronize the internal temperature of the underlying devices. There should be one per underlying device. Should be a calibration entity if checkbox is selected or a temperature entity otherwise. Both are `number` entities."
                 }
             },
             "heating_failure_detection": {

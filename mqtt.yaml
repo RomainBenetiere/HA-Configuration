@@ -86,29 +86,68 @@ sensor:
       value_template: "{{value_json.cpu_temperature | float}}"
       unique_id: tempcpuboxe+
 
-    - name: "Piscine Température"
-      state_topic: "ha/piscine/sensor/ezo_temperature/state"
+    # ==========================
+    # CAPTEURS PISCINE (Valeurs)
+    # ==========================
+    - name: "Piscine Température de l'eau"
+      state_topic: "ha/piscine/sensor/pool_water_temperature/state"
       unit_of_measurement: "°C"
       device_class: temperature
       state_class: measurement
       unique_id: temp_piscine
 
-    - name: "Piscine ORP"
-      state_topic: "ha/piscine/sensor/ezo_orp/state"
+    - name: "Piscine Température Brute"
+      state_topic: "ha/piscine/sensor/ezo_hw_temperature/state"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      unique_id: tempbrute_piscine
+
+    - name: "Piscine ORP (RedOx Lissée)"
+      state_topic: "ha/piscine/sensor/orp_mean/state"
       unit_of_measurement: "mV"
       state_class: measurement
       unique_id: orp_piscine
 
-    - name: "Piscine État Pompe"
-      state_topic: "ha/piscine/sensor/pump_state/state"
-      icon: mdi:water-pump
-      unique_id: pump_state_piscine
-
-    - name: "Piscine pH"
-      state_topic: "ha/piscine/sensor/ezo_ph/state"
-      unit_of_measurement: "pH"
+    - name: "Piscine pH (Lissé)"
+      state_topic: "ha/piscine/sensor/ph_mean/state"
       state_class: measurement
       unique_id: pH_piscine
+
+    - name: "Piscine FC Estimé"
+      state_topic: "ha/piscine/sensor/e_fc/state"
+      unit_of_measurement: "ppm"
+      state_class: measurement
+      unique_id: fc_piscine
+
+    - name: "Piscine Saisie Manuelle FC"
+      state_topic: "ha/piscine/input_number/manual_fc/state"
+      unit_of_measurement: "ppm"
+      state_class: measurement
+      unique_id: manual_fc_piscine
+
+    - name: "Piscine Date Mesure FC"
+      state_topic: "ha/piscine/input_datetime/manual_fc_date/state"
+      icon: mdi:calendar-clock
+      unique_id: date_fc_piscine
+
+    - name: "Piscine Cycles Restants"
+      state_topic: "ha/piscine/sensor/remain_cycles/state"
+      state_class: measurement
+      icon: mdi:sync
+      unique_id: cycles_restants_piscine
+
+    - name: "Piscine Niveau Cuve Acide"
+      state_topic: "ha/piscine/sensor/muriatic_tank/state"
+      unit_of_measurement: "L"
+      state_class: measurement
+      icon: mdi:barrel
+      unique_id: cuve_acide_piscine
+
+    - name: "Piscine État du Cycle Actuel"
+      state_topic: "ha/piscine/sensor/pump_state/state"
+      icon: mdi:water-pump
+      unique_id: cycle_mode_piscine
 
 binary_sensor:
 
@@ -127,17 +166,64 @@ binary_sensor:
       device_class: "Heat"
       unique_id: boxburrad
 
-    - name: "Piscine Pompe (état)"
+    # ==========================
+    # ÉTATS LOGIQUES PISCINE
+    # ==========================
+    - name: "Piscine Commande Pompe (Mode)"
       state_topic: "ha/piscine/switch/pump/state"
       payload_on: "on"
       payload_off: "off"
+      icon: mdi:water-pump
       unique_id: pump_piscine
 
-    - name: "Piscine Robot (état)"
+    - name: "Piscine Commande Robot (Mode)"
       state_topic: "ha/piscine/switch/turbo/state"
       payload_on: "on"
       payload_off: "off"
+      icon: mdi:robot-vacuum
       unique_id: turbo_piscine
+
+    - name: "Piscine Relais Pompe (HW)"
+      state_topic: "ha/piscine/switch/pump_hw/state"
+      payload_on: "on"
+      payload_off: "off"
+      icon: mdi:power-plug
+      unique_id: pump_hw_piscine
+
+    - name: "Piscine Relais Robot (HW)"
+      state_topic: "ha/piscine/switch/turbo_hw/state"
+      payload_on: "on"
+      payload_off: "off"
+      icon: mdi:power-plug
+      unique_id: turbo_hw_piscine
+
+    - name: "Piscine Injection Acide (HW)"
+      state_topic: "ha/piscine/switch/ph_hw/state"
+      payload_on: "on"
+      payload_off: "off"
+      icon: mdi:pump
+      unique_id: injecteur_acide_piscine
+
+    - name: "Piscine Électrolyseur (HW)"
+      state_topic: "ha/piscine/switch/orp_hw/state"
+      payload_on: "on"
+      payload_off: "off"
+      icon: mdi:lightning-bolt
+      unique_id: electrolyseur_piscine
+
+    - name: "Piscine État Alerte Acide"
+      state_topic: "ha/piscine/binary_sensor/muriatic/state"
+      payload_on: "on"
+      payload_off: "off"
+      device_class: problem
+      unique_id: alerte_acide_piscine
+
+    - name: "Piscine État Alerte Électrolyseur"
+      state_topic: "ha/piscine/binary_sensor/bleach/state"
+      payload_on: "on"
+      payload_off: "off"
+      device_class: problem
+      unique_id: alerte_electrolyseur_piscine
  
 #Declaration des etats et modules de commande entre Jeedom et HA --> Pilotage Jeedom via HA
 switch:
@@ -149,4 +235,3 @@ switch:
     payload_off: "OFF"
     optimistic: false
     retain: false
-
