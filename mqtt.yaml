@@ -210,7 +210,11 @@ binary_sensor:
       payload_off: "off"
       device_class: problem
       unique_id: alerte_electrolyseur_piscine
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 9debef2 (Update MQTT)
 #Declaration des etats et modules de commande entre Jeedom et HA --> Pilotage Jeedom via HA
 switch:
   - name: "Lumiere Ext Parking"
