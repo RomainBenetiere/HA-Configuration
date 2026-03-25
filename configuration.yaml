@@ -47,3 +47,13 @@ sonoff: !include sonoff.yaml
 
 homeassistant:
   packages: !include_dir_named packages
+
+lovelace:
+  mode: storage
+  dashboards:
+    piscine_dashboard:
+      mode: yaml
+      title: Piscine
+      icon: mdi:pool
+      show_in_sidebar: true
+      filename: dashboard_piscine.yaml
