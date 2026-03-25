@@ -51,7 +51,7 @@ homeassistant:
 lovelace:
   mode: storage
   dashboards:
-    piscine_dashboard:
+    piscine-dashboard:
       mode: yaml
       title: Piscine
       icon: mdi:pool
