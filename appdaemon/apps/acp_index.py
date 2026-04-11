@@ -63,6 +63,241 @@ class ACPIndex(hass.Hass):
         # Lancer le calcul toutes les 15 minutes, et une fois dans 5 secondes au démarrage
         self.run_every(self.run_acp, "now+15", 15 * 60)
         self.run_in(self.run_acp, 5)
+        
+        # Dashboard web sur le port 5050
+        self.register_endpoint(self.serve_dashboard, "acp_dashboard")
+
+    def serve_dashboard(self, request, kwargs):
+        # Retrieve Current State
+        current_state = self.get_state("sensor.indice_global_acp", attribute="all")
+        score = current_state.get("state", "N/A") if current_state else "N/A"
+        attrs = current_state.get("attributes", {}) if current_state else {}
+        top_var = attrs.get("principale_variable", "N/A")
+
+        # Retrieve History (AppDaemon get_history returns localized timestamps or UTC based on config)
+        history = self.get_history(entity_id="sensor.indice_global_acp", days=7)
+        dates = []
+        values = []
+        if history and len(history) > 0:
+            hist_list = history[0] if isinstance(history[0], list) else history
+            for entry in hist_list:
+                ts = entry.get("last_updated") or entry.get("last_changed")
+                val = entry.get("state")
+                try:
+                    vf = float(val)
+                    dates.append(ts)
+                    values.append(vf)
+                except:
+                    pass
+
+        import json
+        dates_js = json.dumps(dates)
+        values_js = json.dumps(values)
+        
+        html = f"""
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Indice de Déviance Domotique</title>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+            <style>
+                :root {{
+                    --bg-dark: #0f172a;
+                    --glass-bg: rgba(30, 41, 59, 0.7);
+                    --glass-border: rgba(255, 255, 255, 0.1);
+                    --accent: #38bdf8;
+                    --accent-glow: rgba(56, 189, 248, 0.5);
+                    --text-main: #f8fafc;
+                    --text-muted: #94a3b8;
+                }}
+                body {{
+                    margin: 0;
+                    padding: 0;
+                    min-height: 100vh;
+                    background: radial-gradient(circle at top right, #1e293b, var(--bg-dark));
+                    font-family: 'Outfit', sans-serif;
+                    color: var(--text-main);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 2rem;
+                    box-sizing: border-box;
+                }}
+                .container {{
+                    max-width: 900px;
+                    width: 100%;
+                    display: grid;
+                    gap: 1.5rem;
+                }}
+                .glass-card {{
+                    background: var(--glass-bg);
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                    border: 1px solid var(--glass-border);
+                    border-radius: 20px;
+                    padding: 2rem;
+                    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }}
+                .glass-card:hover {{
+                    transform: translateY(-5px);
+                    box-shadow: 0 12px 40px 0 var(--accent-glow);
+                }}
+                .header {{
+                    text-align: center;
+                    margin-bottom: 1rem;
+                }}
+                h1 {{
+                    font-weight: 800;
+                    margin: 0;
+                    font-size: 2.5rem;
+                    background: -webkit-linear-gradient(45deg, #38bdf8, #818cf8);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }}
+                h2 {{
+                    font-weight: 300;
+                    color: var(--text-muted);
+                    font-size: 1.2rem;
+                    margin-top: 0.5rem;
+                }}
+                .stats-grid {{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1.5rem;
+                }}
+                .stat-box {{
+                    text-align: center;
+                }}
+                .stat-value {{
+                    font-size: 3rem;
+                    font-weight: 800;
+                    color: var(--accent);
+                }}
+                .stat-label {{
+                    font-size: 1rem;
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }}
+                .chart-container {{
+                    position: relative;
+                    height: 400px;
+                    width: 100%;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Indice de Déviance</h1>
+                    <h2>Analyse en Composantes Principales (ACP)</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="glass-card stat-box">
+                        <div class="stat-value">{score}%</div>
+                        <div class="stat-label">Déviance Actuelle</div>
+                    </div>
+                    <div class="glass-card stat-box">
+                        <div class="stat-value" style="font-size: 1.5rem; line-height: 2rem; word-break: break-all;">{top_var.replace('sensor.', '')}</div>
+                        <div class="stat-label">Variable Dominante</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="chart-container">
+                        <canvas id="historyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const ctx = document.getElementById('historyChart').getContext('2d');
+                
+                const rawDates = {dates_js};
+                const labels = rawDates.map(d => {{
+                    const dt = new Date(d);
+                    return dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString([], {{hour: '2-digit', minute:'2-digit'}});
+                }});
+                
+                const dataPoints = {values_js};
+
+                let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, 'rgba(56, 189, 248, 0.5)');
+                gradient.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+
+                new Chart(ctx, {{
+                    type: 'line',
+                    data: {{
+                        labels: labels,
+                        datasets: [{{
+                            label: 'Indice de Déviance (%)',
+                            data: dataPoints,
+                            borderColor: '#38bdf8',
+                            backgroundColor: gradient,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#38bdf8',
+                            pointHoverBackgroundColor: '#38bdf8',
+                            pointHoverBorderColor: '#fff',
+                            pointRadius: 0,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            tension: 0.4
+                        }}]
+                    }},
+                    options: {{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {{
+                            mode: 'index',
+                            intersect: false,
+                        }},
+                        plugins: {{
+                            legend: {{ display: false }},
+                            tooltip: {{
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleFont: {{ family: 'Outfit', size: 14 }},
+                                bodyFont: {{ family: 'Outfit', size: 16, weight: 'bold' }},
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {{
+                                    label: function(context) {{
+                                        return context.parsed.y + ' %';
+                                    }}
+                                }}
+                            }}
+                        }},
+                        scales: {{
+                            x: {{
+                                grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
+                                ticks: {{
+                                    color: '#94a3b8',
+                                    font: {{ family: 'Outfit' }},
+                                    maxTicksLimit: 8
+                                }}
+                            }},
+                            y: {{
+                                grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
+                                ticks: {{
+                                    color: '#94a3b8',
+                                    font: {{ family: 'Outfit' }},
+                                    callback: function(value) {{ return value + '%' }}
+                                }}
+                            }}
+                        }}
+                    }}
+                }});
+            </script>
+        </body>
+        </html>
+        """
+        
+        return html, 200
 
     def run_acp(self, kwargs):
         self.log(f"Début du calcul de l'ACP (Historique: {self.history_days}j)")
