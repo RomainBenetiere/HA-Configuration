@@ -1,0 +1,5 @@
+acp_deviance:
+  module: acp_index
+  class: ACPIndex
+  history_days: 30
+  variance_threshold: 0.80
