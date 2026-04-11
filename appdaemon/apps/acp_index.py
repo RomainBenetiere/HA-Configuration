@@ -168,7 +168,7 @@ class ACPIndex(hass.Hass):
     def encode_binary(self, series):
         mapping = {"on": 1.0, "off": 0.0, "true": 1.0, "false": 0.0, "1": 1.0, "0": 0.0}
         values = series.map(lambda x: mapping.get(str(x).lower(), np.nan))
-        values = values.fillna(method="ffill").fillna(0.0)
+        values = values.ffill().fillna(0.0)
 
         if values.std() == 0:
             return None, []
@@ -176,7 +176,7 @@ class ACPIndex(hass.Hass):
         return values.values.reshape(-1, 1), [series.name]
 
     def encode_categorical(self, series):
-        series = series.fillna(method="ffill").fillna("unknown")
+        series = series.ffill().fillna("unknown")
         dummies = pd.get_dummies(series, prefix=series.name)
         
         non_const_cols = [c for c in dummies.columns if dummies[c].std() > 0]
