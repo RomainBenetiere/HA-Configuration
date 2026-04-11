@@ -1,0 +1,22 @@
+appdaemon:
+  latitude: 0.0
+  longitude: 0.0
+  elevation: 0
+  time_zone: Europe/Paris
+  plugins:
+    HASS:
+      type: hass
+  # ----------------------------------------------------------------------
+  # THE CRITICAL SETTING: 
+  # This tells the AppDaemon Addon to ignore its local apps folder 
+  # and read directly from your GitHub-synced Home Assistant core folder!
+  # (/homeassistant is what the Addon calls your main /config folder)
+  # ----------------------------------------------------------------------
+  app_dir: /homeassistant/appdaemon/apps
+
+http:
+  url: http://127.0.0.1:5050
+
+admin:
+api:
+hadashboard:
