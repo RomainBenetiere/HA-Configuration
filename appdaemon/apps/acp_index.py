@@ -67,34 +67,40 @@ class ACPIndex(hass.Hass):
         # Dashboard web sur le port 5050
         self.register_endpoint(self.serve_dashboard, "acp_dashboard")
 
-    def serve_dashboard(self, request, kwargs):
-        # Retrieve Current State
-        current_state = self.get_state("sensor.indice_global_acp", attribute="all")
-        score = current_state.get("state", "N/A") if current_state else "N/A"
-        attrs = current_state.get("attributes", {}) if current_state else {}
-        top_var = attrs.get("principale_variable", "N/A")
+    def serve_dashboard(self, *args, **kwargs):
+        try:
+            # Retrieve Current State
+            current_state = self.get_state("sensor.indice_global_acp", attribute="all")
+            score = current_state.get("state", "N/A") if current_state else "N/A"
+            attrs = current_state.get("attributes", {}) if current_state else {}
+            top_var = attrs.get("principale_variable", "N/A")
+            if top_var is None:
+                top_var = "N/A"
 
-        # Retrieve History (AppDaemon get_history returns localized timestamps or UTC based on config)
-        history = self.get_history(entity_id="sensor.indice_global_acp", days=7)
-        dates = []
-        values = []
-        if history and len(history) > 0:
-            hist_list = history[0] if isinstance(history[0], list) else history
-            for entry in hist_list:
-                ts = entry.get("last_updated") or entry.get("last_changed")
-                val = entry.get("state")
-                try:
-                    vf = float(val)
-                    dates.append(ts)
-                    values.append(vf)
-                except:
-                    pass
+            # Retrieve History (AppDaemon get_history returns localized timestamps or UTC based on config)
+            history = self.get_history(entity_id="sensor.indice_global_acp", days=7)
+            dates = []
+            values = []
+            if history and len(history) > 0:
+                hist_list = history[0] if isinstance(history[0], list) else history
+                for entry in hist_list:
+                    ts = entry.get("last_updated") or entry.get("last_changed")
+                    val = entry.get("state")
+                    try:
+                        vf = float(val)
+                        dates.append(ts)
+                        values.append(vf)
+                    except:
+                        pass
 
-        import json
-        dates_js = json.dumps(dates)
-        values_js = json.dumps(values)
-        
-        html = f"""
+            import json
+            dates_js = json.dumps(dates)
+            values_js = json.dumps(values)
+            
+            top_var_str = str(top_var).replace('sensor.', '')
+
+            
+            html = f"""
         <!DOCTYPE html>
         <html lang="fr">
         <head>
@@ -296,8 +302,12 @@ class ACPIndex(hass.Hass):
         </body>
         </html>
         """
-        
-        return html, 200
+            return html, 200
+        except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            self.log(f"Error in serve_dashboard: {error_details}", level="ERROR")
+            return f"<html><body><h1>Internal Server Error</h1><pre>{error_details}</pre></body></html>", 500
 
     def run_acp(self, kwargs):
         self.log(f"Début du calcul de l'ACP (Historique: {self.history_days}j)")
