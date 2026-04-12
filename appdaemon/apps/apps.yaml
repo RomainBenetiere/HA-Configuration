@@ -3,3 +3,10 @@ acp_deviance:
   class: ACPIndex
   history_days: 30
   variance_threshold: 0.80
+
+export_historique:
+  module: export_csv
+  class: ExportCSV
+  history_days: 30
+  output_file: '/homeassistant/export_historique.csv'
+
