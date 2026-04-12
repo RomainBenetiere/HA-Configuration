@@ -396,6 +396,18 @@ class ACPIndex(hass.Hass):
         df = pd.DataFrame(series_dict)
         # Using forward fill and interpolation for resampling
         df = df.resample(resample_interval).last()
+        
+        # Ajout des variables temporelles (Cyclic Time)
+        try:
+            local_dt = df.index.tz_convert('Europe/Paris')
+        except Exception:
+            local_dt = df.index
+            
+        hour_float = local_dt.hour + local_dt.minute / 60.0
+        df['time_sin'] = np.sin(2 * np.pi * hour_float / 24.0)
+        df['time_cos'] = np.cos(2 * np.pi * hour_float / 24.0)
+        df['is_weekend'] = local_dt.dayofweek.isin([5, 6]).astype(float)
+        
         return df
 
     def encode_numeric(self, series):
@@ -452,6 +464,14 @@ class ACPIndex(hass.Hass):
         for eid in self.categorical_entities:
             if eid in df.columns:
                 result, names = self.encode_categorical(df[eid])
+                if result is not None:
+                    blocks.append(result)
+                    feature_names.extend(names)
+
+        # Ajout des variables temporelles
+        for time_col in ['time_sin', 'time_cos', 'is_weekend']:
+            if time_col in df.columns:
+                result, names = self.encode_numeric(df[time_col])
                 if result is not None:
                     blocks.append(result)
                     feature_names.extend(names)
