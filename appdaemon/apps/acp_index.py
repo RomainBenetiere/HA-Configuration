@@ -98,6 +98,14 @@ class ACPIndex(hass.Hass):
             self.log("DataFrame vide après conversion. Abandon.")
             return
 
+        # Construction de la matrice de features sur TOUT le dataframe d'abord
+        # Cela garantit que `current_scaled` et `X_ref` auront exactement le même nombre de colonnes
+        # (et les mêmes dummy variables pour le catégoriel).
+        X_all, feature_names = self.build_feature_matrix(df)
+        if X_all.size == 0 or X_all.shape[1] < 2:
+            self.log("Matrice de base vide ou insuffisante. Abandon.")
+            return
+
         # Filtrage temporel: garder uniquement les lignes dans +/- 15 min de l'heure actuelle
         now_time = datetime.now(timezone.utc)
         target_hour = now_time.hour
@@ -115,22 +123,20 @@ class ACPIndex(hass.Hass):
                 diff = 1440 - diff
             return diff <= self.window_minutes
 
-        df_ref = df[df.index.map(is_in_window)]
+        # On applique le filtre temporel sur la matrice globale
+        mask = df.index.map(is_in_window)
+        mask_arr = np.array(mask)
+        X_ref = X_all[mask_arr]
         
-        if df_ref.empty:
-            self.log("DataFrame de référence vide après filtrage temporel. Abandon.")
+        if X_ref.shape[0] < 10:
+            self.log("Données de référence insuffisantes après filtrage temporel. Abandon.")
             return
             
-        self.log(f"Données de référence historiques (fenêtre temporelle) : {df_ref.shape[0]} lignes × {df_ref.shape[1]} colonnes")
+        self.log(f"Données de référence historiques (fenêtre temporelle) : {X_ref.shape[0]} lignes × {X_ref.shape[1]} colonnes")
 
-        X, feature_names = self.build_feature_matrix(df_ref)
-        if X.size == 0 or X.shape[1] < 2 or X.shape[0] < 10:
-            self.log("Matrice de features de référence vide ou insuffisante. Abandon.")
-            return
-
-        # Construction du scaler et de la PCA sur df_ref
+        # Construction du scaler et de la PCA sur df_ref (X_ref)
         scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
+        X_scaled = scaler.fit_transform(X_ref)
 
         n_components = min(X_scaled.shape[0], X_scaled.shape[1])
         pca = PCA(n_components=min(n_components, max(2, int(X_scaled.shape[1] * 0.9))))
@@ -144,8 +150,6 @@ class ACPIndex(hass.Hass):
         self.log(f"ACP : {n_keep} composantes retenues ({cumvar[n_keep-1]*100:.1f}% variance expliquée)")
 
         # Récupérer l'état complet à l'instant présent (la dernière ligne de l'historique brut)
-        # On doit utiliser le pre-processing des mêmes colonnes pour obtenir x_now
-        X_all, feature_names_all = self.build_feature_matrix(df)
         current_original = X_all[-1, :]
         current_scaled = scaler.transform(current_original.reshape(1, -1))
         
@@ -251,9 +255,6 @@ class ACPIndex(hass.Hass):
             mean_val = 0.0
         values = values.fillna(mean_val)
 
-        if values.std() == 0 or values.isna().all():
-            return None, []
-
         return values.values.reshape(-1, 1), [df_col.name]
 
     def encode_binary(self, df_col):
@@ -261,20 +262,12 @@ class ACPIndex(hass.Hass):
         values = df_col.map(lambda x: mapping.get(str(x).lower(), np.nan))
         values = values.ffill().fillna(0.0)
 
-        if values.std() == 0:
-            return None, []
-
         return values.values.reshape(-1, 1), [df_col.name]
 
     def encode_categorical(self, df_col):
         df_col = df_col.ffill().fillna("unknown")
         dummies = pd.get_dummies(df_col, prefix=df_col.name)
         
-        non_const_cols = [c for c in dummies.columns if dummies[c].std() > 0]
-        if not non_const_cols:
-            return None, []
-
-        dummies = dummies[non_const_cols]
         return dummies.values, list(dummies.columns)
 
     def build_feature_matrix(self, df):
