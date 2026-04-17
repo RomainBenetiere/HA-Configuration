@@ -13,52 +13,85 @@ class ACPIndex(hass.Hass):
         
         # Récupération des paramètres passés dans apps.yaml
         self.history_days = self.args.get("history_days", 30)
-        self.window_minutes = 15  # +/- 15 minutes
         
-        # Entités configurées
+        # Entités configurées (selon la nouvelle liste)
         self.numeric_entities = [
+            "sensor.envoy_122301074544_production_d_electricite_actuelle",
             "sensor.salon_temperature_corrigee",
+            "sensor.chambre_temperature_corrigee",
+            "sensor.carillon_force_du_signal",
             "sensor.jardin_temperature_corrigee",
-            "sensor.bur_box_temperature_corrigee",
-            "sensor.bur_mezzanine_temperature_corrigee",
-            "sensor.champ_parents_temperature_corrigee",
-            "sensor.garage_temperature_corrigee",
-            "sensor.piscine_temperature_de_l_eau",
-            "sensor.salon_humidite_corrigee",
-            "sensor.bur_box_humidite_corrigee",
-            "sensor.bur_mezzanine_humidite_corrigee",
-            "sensor.champ_parents_humidite_corrigee",
-            "sensor.garage_humidite_corrigee",
-            "sensor.power_network",
+            "sensor.envoy_122301074544_consommation_d_energie_totale",
+            "sensor.envoy_122301074544_lifetime_net_energy_consumption",
+            "sensor.pac_energy",
+            "sensor.suivipac_pac_cabinet_temp",
+            "sensor.envoy_122301074544_production_d_energie_totale",
+            "sensor.envoy_122301074544_lifetime_net_energy_production",
             "sensor.q_th",
-            "sensor.cop_instantane",
-            "sensor.elec3_cm180_88_b2_puissance_instantanee",
-            "sensor.duty_cycle_1h",
-            "sensor.piscine_ph_lisse",
-            "sensor.piscine_orp_redox_lissee",
-            "sensor.piscine_fc_estime",
-            "sensor.info_nh3_box_env",
-            "sensor.info_pm25_box_env",
-            "sensor.info_pressure_box_env",
-            "sensor.info_temperature_box_env",
-            "sensor.info_humidite_box_env",
+            "sensor.delta_eau_modele",
+            "sensor.chambre_humidite_corrigee",
+            "sensor.openweathermap_feels_like_temperature",
+            "sensor.openweathermap_temperature",
+            "sensor.energy_current_hour",
+            "sensor.power_production_now",
+            "sensor.q_th_energy",
+            "sensor.openweathermap_uv_index",
+            "sensor.bur_buan_point_de_rosee",
+            "sensor.garage_temperature_corrigee",
+            "sensor.bur_buan_temperature_corrigee",
+            "sensor.energy_next_hour",
+            "sensor.envoy_122301074544_lifetime_balanced_net_energy_consumption",
+            "sensor.salon_point_de_rosee",
+            "sensor.chambre_point_de_rosee",
+            "sensor.garage_humidite_absolue",
+            "sensor.salon_humidite_absolue",
+            "sensor.delta_eau_ecart",
+            "sensor.chambre_humidite_absolue",
+            "sensor.garage_point_de_rosee",
+            "sensor.garage_humidite_corrigee",
+            "sensor.bur_box_temperature_corrigee",
+            "sensor.cycles_24h",
+            "sensor.bur_buan_humidite_absolue",
+            "sensor.energy_production_today",
+            "sensor.thgr810_thgn800_72_02_temperature",
+            "sensor.thermostat_box_bureau_ema_temperature",
+            "sensor.portail_wifi_signal_sensor",
+            "sensor.energy_production_today_remaining",
+            "sensor.openweathermap_humidity",
+            "sensor.energy_production_tomorrow",
+            "sensor.ecart_depart_vs_consigne",
+            "sensor.jardin_humidite_corrigee",
+            "sensor.q_th_daily",
+            "sensor.q_th_daily_2",
+            "sensor.suivipac_temppac_out",
+            "sensor.thgr810_thgn800_72_02_humidite",
+            "sensor.bur_box_humidite_corrigee",
+            "sensor.envoy_122301074544_production_d_energie_du_jour",
+            "sensor.sun_solar_elevation",
+            "sensor.cop_journalier",
+            "sensor.bur_box_point_de_rosee",
+            "sensor.bur_box_humidite_absolue",
+            "sensor.suivipac_temppac_in",
+            "sensor.jardin_point_de_rosee"
         ]
 
         self.binary_entities = [
+            "binary_sensor.workday_sensor",
+            "switch.portail_close_portal",
+            "switch.portail_open_portal",
             "binary_sensor.pac_en_marche",
-            "binary_sensor.piscine_relais_pompe_hw",
-            "binary_sensor.piscine_relais_robot_hw",
-            "binary_sensor.piscine_injection_acide_hw",
-            "binary_sensor.piscine_electrolyseur_hw",
-            "binary_sensor.info_lum_chb_art",
-            "binary_sensor.info_lum_chb_elliot",
-            "binary_sensor.info_radiateur_box",
-            "binary_sensor.power_excess",
-            "binary_sensor.power_shortage",
+            "switch.chauffe_eau_michelou",
+            "automation.ouvrir_volet_chambre_matin"
         ]
 
         self.categorical_entities = [
-            "sensor.piscine_etat_du_cycle_actuel",
+            "cover.volet_roulant_cuisine",
+            "cover.volets_roulants_buanderie",
+            "cover.volet_roulant_cham_parents",
+            "cover.volet_roulant_cham_elliot",
+            "cover.volet_roulant_cham_arthur",
+            "cover.volet_roulant_sam_2",
+            "cover.volet_roulant_sam_1"
         ]
 
         # Lancer le calcul toutes les 15 minutes, et une fois dans 5 secondes au démarrage
@@ -66,7 +99,7 @@ class ACPIndex(hass.Hass):
         self.run_in(self.run_anomaly_detection, 5)
 
     def run_anomaly_detection(self, kwargs):
-        self.log(f"Début du calcul Mahalanobis (Historique: {self.history_days}j, Fenêtre: +/-{self.window_minutes}min)")
+        self.log(f"Début du calcul Mahalanobis (Global ACP - Historique: {self.history_days}j)")
         all_entities = self.numeric_entities + self.binary_entities + self.categorical_entities
         
         history = {}
@@ -98,45 +131,17 @@ class ACPIndex(hass.Hass):
             self.log("DataFrame vide après conversion. Abandon.")
             return
 
-        # Construction de la matrice de features sur TOUT le dataframe d'abord
-        # Cela garantit que `current_scaled` et `X_ref` auront exactement le même nombre de colonnes
-        # (et les mêmes dummy variables pour le catégoriel).
+        # Construction de la matrice de features sur TOUT le dataframe (Modèle Global)
         X_all, feature_names = self.build_feature_matrix(df)
-        if X_all.size == 0 or X_all.shape[1] < 2:
+        if X_all.size == 0 or X_all.shape[1] < 2 or X_all.shape[0] < 10:
             self.log("Matrice de base vide ou insuffisante. Abandon.")
             return
 
-        # Filtrage temporel: garder uniquement les lignes dans +/- 15 min de l'heure actuelle
-        now_time = datetime.now(timezone.utc)
-        target_hour = now_time.hour
-        target_minute = now_time.minute
-        
-        # On calcule les minutes écoulées depuis minuit pour la comparaison
-        target_total_minutes = target_hour * 60 + target_minute
-        
-        def is_in_window(ts):
-            # Formule robuste aux jours qui passent (minuit)
-            ts_minutes = ts.hour * 60 + ts.minute
-            diff = abs(ts_minutes - target_total_minutes)
-            # Gérer le passage par minuit (ex: target=23h50, ts=00h05 -> diff=1435)
-            if diff > 720: # plus de 12h d'écart -> on prend l'autre côté de minuit
-                diff = 1440 - diff
-            return diff <= self.window_minutes
+        self.log(f"Données de référence (Modèle Global) : {X_all.shape[0]} observations × {X_all.shape[1]} colonnes")
 
-        # On applique le filtre temporel sur la matrice globale
-        mask = df.index.map(is_in_window)
-        mask_arr = np.array(mask)
-        X_ref = X_all[mask_arr]
-        
-        if X_ref.shape[0] < 10:
-            self.log("Données de référence insuffisantes après filtrage temporel. Abandon.")
-            return
-            
-        self.log(f"Données de référence historiques (fenêtre temporelle) : {X_ref.shape[0]} lignes × {X_ref.shape[1]} colonnes")
-
-        # Construction du scaler et de la PCA sur df_ref (X_ref)
+        # Construction du scaler et de la PCA sur X_all directement (ACP Globale)
         scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X_ref)
+        X_scaled = scaler.fit_transform(X_all)
 
         n_components = min(X_scaled.shape[0], X_scaled.shape[1])
         pca = PCA(n_components=min(n_components, max(2, int(X_scaled.shape[1] * 0.9))))
@@ -167,6 +172,8 @@ class ACPIndex(hass.Hass):
         
         # Diagnostic de Contribution (si ça dépasse le seuil critique)
         top_variable = "unknown"
+        top_3_contributors_str = "unknown"
+        
         if criticality_ratio > 1.0:
             P = pca.components_[:n_keep, :]
             # Contributions estimées par la méthode de reconstruction des scores pondérés.
@@ -175,8 +182,19 @@ class ACPIndex(hass.Hass):
             contributions = np.abs(c_j)
             
             if len(contributions) > 0 and len(feature_names) == len(contributions):
-                top_idx = int(np.argmax(contributions))
-                top_variable = feature_names[top_idx]
+                forbidden_features = ["hour_sin", "hour_cos", "day_sin", "day_cos"]
+                valid_indices = [i for i, name in enumerate(feature_names) if name not in forbidden_features]
+                
+                if valid_indices:
+                    valid_contributions = contributions[valid_indices]
+                    valid_names = [feature_names[i] for i in valid_indices]
+                    
+                    # Tris des variables explicatives physiques
+                    sorted_rel_indices = np.argsort(valid_contributions)[::-1]
+                    top_variable = valid_names[sorted_rel_indices[0]]
+                    
+                    top_3_list = [valid_names[i] for i in sorted_rel_indices[:min(3, len(valid_names))]]
+                    top_3_contributors_str = ", ".join(top_3_list)
                 
         now_iso = datetime.now(timezone.utc).isoformat()
         
@@ -212,6 +230,7 @@ class ACPIndex(hass.Hass):
             attributes={
                 "friendly_name": "Source de l'Anomalie",
                 "icon": "mdi:feature-search",
+                "top_3_contributors": top_3_contributors_str,
                 "derniere_mise_a_jour": now_iso
             })
 
@@ -245,6 +264,20 @@ class ACPIndex(hass.Hass):
         # Using forward fill and interpolation for resampling
         df = df.resample(resample_interval).last()
         
+        # Ingénierie des variables temporelles (Cyclic Features)
+        try:
+            local_dt = df.index.tz_convert('Europe/Paris')
+        except Exception:
+            local_dt = df.index
+            
+        minutes_of_day = local_dt.hour * 60 + local_dt.minute
+        df['hour_sin'] = np.sin(2 * np.pi * minutes_of_day / 1440.0)
+        df['hour_cos'] = np.cos(2 * np.pi * minutes_of_day / 1440.0)
+        
+        day_of_week = local_dt.dayofweek
+        df['day_sin'] = np.sin(2 * np.pi * day_of_week / 7.0)
+        df['day_cos'] = np.cos(2 * np.pi * day_of_week / 7.0)
+        
         return df
 
     def encode_numeric(self, df_col):
@@ -274,7 +307,8 @@ class ACPIndex(hass.Hass):
         blocks = []
         feature_names = []
 
-        for eid in self.numeric_entities:
+        cyclic_features = ['hour_sin', 'hour_cos', 'day_sin', 'day_cos']
+        for eid in self.numeric_entities + cyclic_features:
             if eid in df.columns:
                 result, names = self.encode_numeric(df[eid])
                 if result is not None:
