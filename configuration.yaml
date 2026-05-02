@@ -46,7 +46,7 @@ homekit: !include homekit.yaml
 sonoff: !include sonoff.yaml
 
 homeassistant:
-  packages: !include_dir_named packages
+  packages: !include_dir_named packages/
 
 lovelace:
   mode: storage
