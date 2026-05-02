@@ -65,6 +65,8 @@ template:
         device_class: temperature
         unit_of_measurement: "°C"
         state_class: measurement
+        availability: >
+          {{ is_number(states('sensor.thgr810_thgn800_72_02_humidite')) and states('sensor.thgr810_thgn800_72_02_temperature') not in ['unknown','unavailable'] }}
         state: >
           {% set T  = states('sensor.thgr810_thgn800_72_02_temperature') | float(0) %}
           {% set RH = states('sensor.thgr810_thgn800_72_02_humidite')    | float(0) %}
@@ -87,6 +89,8 @@ template:
         unique_id: bur_box_ah
         unit_of_measurement: "g/m³"
         state_class: measurement
+        availability: >
+          {{ is_number(states('sensor.thgr810_thgn800_72_02_humidite')) and states('sensor.thgr810_thgn800_72_02_temperature') not in ['unknown','unavailable'] }}
         state: >
           {% set T  = states('sensor.thgr810_thgn800_72_02_temperature') | float(0) %}
           {% set RH = states('sensor.thgr810_thgn800_72_02_humidite')    | float(0) %}
