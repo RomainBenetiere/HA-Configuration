@@ -10,10 +10,10 @@ template:
         unit_of_measurement: "cm/j"
         state_class: measurement
         state: >
-          {% set T_pool = states('sensor.piscine_temperature')|float %}
-          {% set T_air  = states('sensor.temp_hr_jardin_temperature')|float %}
-          {% set RH     = states('sensor.temp_hr_jardin_humidite')|float %}
-          {% set Wind   = states('input_number.wind_speed')|float %}
+          {% set T_pool = states('sensor.piscine_temperature')|float(0) %}
+          {% set T_air  = states('sensor.temp_hr_jardin_temperature')|float(0) %}
+          {% set RH     = states('sensor.temp_hr_jardin_humidite')|float(0) %}
+          {% set Wind   = states('input_number.wind_speed')|float(0) %}
           {{ ((
             -1.8286596122
             + (-0.107160555  * T_pool)
@@ -33,19 +33,19 @@ template:
         unit_of_measurement: "kg/h"
         state_class: measurement
         state: >
-          {% set rate = states('sensor.pool_evap_rate_cm_j')|float %}
-          {% set L = states('input_number.pool_length')|float %}
-          {% set W = states('input_number.pool_width')|float %}
+          {% set rate = states('sensor.pool_evap_rate_cm_j')|float(0) %}
+          {% set L = states('input_number.pool_length')|float(0) %}
+          {% set W = states('input_number.pool_width')|float(0) %}
           {{ (rate * L * W * 10 / 24) | round(2) }}
       - name: "Pool Temp Drop C_per_h"
         unit_of_measurement: "°C/h"
         state_class: measurement
         state: >
-          {% set m_evap = states('sensor.pool_evap_mass_kg_h')|float %}
-          {% set T_pool = states('sensor.piscine_temperature')|float %}
-          {% set L = states('input_number.pool_length')|float %}
-          {% set W = states('input_number.pool_width')|float %}
-          {% set D = states('input_number.pool_depth')|float %}
+          {% set m_evap = states('sensor.pool_evap_mass_kg_h')|float(0) %}
+          {% set T_pool = states('sensor.piscine_temperature')|float(0) %}
+          {% set L = states('input_number.pool_length')|float(0) %}
+          {% set W = states('input_number.pool_width')|float(0) %}
+          {% set D = states('input_number.pool_depth')|float(0) %}
           {% set h_fg = 2501 - 2.361 * T_pool %}
           {% set volume = L * W * D %}
           {% if volume == 0 %}

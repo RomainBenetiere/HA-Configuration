@@ -159,10 +159,10 @@ template:
           {% set e2 = states('input_datetime.wd_comfort2_end')   if wd else states('input_datetime.we_comfort2_end') %}
 
           {% set now_min = now().hour*60 + now().minute %}
-          {% set s1m = s1.split(':')[0]|int*60 + s1.split(':')[1]|int %}
-          {% set e1m = e1.split(':')[0]|int*60 + e1.split(':')[1]|int %}
-          {% set s2m = s2.split(':')[0]|int*60 + s2.split(':')[1]|int %}
-          {% set e2m = e2.split(':')[0]|int*60 + e2.split(':')[1]|int %}
+          {% set s1m = s1.split(':')[0]|int(0)*60 + s1.split(':')[1]|int(0) %}
+          {% set e1m = e1.split(':')[0]|int(0)*60 + e1.split(':')[1]|int(0) %}
+          {% set s2m = s2.split(':')[0]|int(0)*60 + s2.split(':')[1]|int(0) %}
+          {% set e2m = e2.split(':')[0]|int(0)*60 + e2.split(':')[1]|int(0) %}
 
           {# fonction "dans intervalle" avec gestion du chevauchement minuit #}
           {% set in1 = (s1m <= e1m and s1m <= now_min <= e1m) or (s1m > e1m and (now_min >= s1m or now_min <= e1m)) %}
@@ -190,8 +190,8 @@ template:
           {% set Tmax  = states('input_number.loi_eau_tmax')|float(35) %}
           {% set K     = states('input_number.ambiance_k')|float(2.2) %}
 
-          {% set Text  = states('sensor.jardin_temperature_corrigee')|float %}   {# <<< adapte si besoin #}
-          {% set Tpie  = states('sensor.salon_temperature_corrigee')|float %}    {# <<< adapte si besoin #}
+          {% set Text  = states('sensor.jardin_temperature_corrigee')|float(0) %}   {# <<< adapte si besoin #}
+          {% set Tpie  = states('sensor.salon_temperature_corrigee')|float(0) %}    {# <<< adapte si besoin #}
           {% set Tcons = states('sensor.consigne_ambiance_active')|float(20) %}
 
           {% set t_base = (Tmin - Text) * Pente + Tmin %}
@@ -206,8 +206,8 @@ template:
         unit_of_measurement: "K"
         icon: mdi:delta
         state: >
-          {% set Tdep = states('sensor.suivipac_temppac_in')|float(nan) %}   {# remplace si dispo #}
-          {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(nan) %}
+          {% set Tdep = states('sensor.suivipac_temppac_in')|float(0) %}   {# remplace si dispo #}
+          {% set Tcib = states('sensor.consigne_eau_virtuelle')|float(0) %}
           {% if (Tdep|string) not in ['unknown','unavailable','nan'] and (Tcib|string) not in ['unknown','unavailable','nan'] %}
             {{ (Tdep - Tcib)|round(1) }}
           {% else %}
@@ -221,8 +221,8 @@ template:
         device_class: power
         state: >
           {% set H = states('input_number.h_perte_batiment')|float(344) %}
-          {% set Tint = states('sensor.salon_temperature_corrigee')|float %}
-          {% set Text = states('sensor.jardin_temperature_corrigee')|float %}
+          {% set Tint = states('sensor.salon_temperature_corrigee')|float(0) %}
+          {% set Text = states('sensor.jardin_temperature_corrigee')|float(0) %}
           {{ (Tint - Text) * H }}
 
       # (KPI 2) Q_th filtré (ΔT_eau >= seuil) -> sinon 0 (évite le bruit)
@@ -233,9 +233,9 @@ template:
         state: >
           {% set Pmin = states('input_number.power_on_threshold')|float(2) %}
           {% set P = states('sensor.elec3_cm180_88_b2_puissance_instantanee')|float(0) %}
-          {% set dTeau = states('sensor.suivipac_temppac_diff')|float %}
+          {% set dTeau = states('sensor.suivipac_temppac_diff')|float(0) %}
           {% if P >= Pmin %}
-            {{ states('sensor.q_th')|float }}
+            {{ states('sensor.q_th')|float(0) }}
           {% else %}
             unknown
           {% endif %}
@@ -262,8 +262,8 @@ template:
         icon: mdi:water-thermometer
         state: >
           {% set H = states('input_number.h_perte_batiment')|float(344) %}
-          {% set Tint = states('sensor.salon_temperature_corrigee')|float %}
-          {% set Text = states('sensor.jardin_temperature_corrigee')|float %}
+          {% set Tint = states('sensor.salon_temperature_corrigee')|float(0) %}
+          {% set Text = states('sensor.jardin_temperature_corrigee')|float(0) %}
           {% set V_l_min = states('input_number.flow_l_min')|float(4) %}
           {% set V_m3_h = V_l_min * 0.06 %}
           {% set Q_kW = (H * (Tint - Text)) / 1000 %}
@@ -279,7 +279,7 @@ template:
         unit_of_measurement: "K"
         icon: mdi:delta
         state: >
-          {% set d_meas = states('sensor.suivipac_temppac_diff')|float %}
+          {% set d_meas = states('sensor.suivipac_temppac_diff')|float(0) %}
           {% set d_model = states('sensor.delta_eau_modele')|float(0) %}
           {{ (d_meas - d_model) | round(2) }}
 
