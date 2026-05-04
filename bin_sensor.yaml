@@ -6,7 +6,7 @@
         minutes: 15
       delay_off:
         minutes: 0
-      value_template: "{{ states('sensor.Pui_Res_10m') | float < -2.0 }}"
+      value_template: "{{ states('sensor.Pui_Res_10m') | float(0) < -2.0 }}"
       unique_id: nrjplus
 
     power_shortage:
@@ -15,5 +15,5 @@
         minutes: 10
       delay_off:
         minutes: 0
-      value_template: "{{ states('sensor.Pui_Res_10m') | float > 1 }}"
+      value_template: "{{ states('sensor.Pui_Res_10m') | float(0) > 1 }}"
       unique_id: nrjless

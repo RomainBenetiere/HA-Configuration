@@ -23,67 +23,67 @@ sensor:
     - name: "Info Temperature Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "temperature"
-      value_template: "{{value_json.temperature | float}}"
+      value_template: "{{value_json.temperature | float(0)}}"
       unique_id: tempboxe+
 
     - name: "Info Humidité Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "humidity"
-      value_template: "{{value_json.humidity | float}}"
+      value_template: "{{value_json.humidity | float(0)}}"
       unique_id: humboxe+
 
     - name: "Info Lumière Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "illuminance"
-      value_template: "{{value_json.lux | float}}"
+      value_template: "{{value_json.lux | float(0)}}"
       unique_id: luxboxe+
 
     - name: "Info NH3 Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "nitrous_oxide"
-      value_template: "{{value_json.nh3 | float}}"
+      value_template: "{{value_json.nh3 | float(0)}}"
       unique_id: nh3boxe+
 
     - name: "Info Oxidized Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "nitrous_oxide"
-      value_template: "{{value_json.oxidised | float}}"
+      value_template: "{{value_json.oxidised | float(0)}}"
       unique_id: oxiboxe+
 
     - name: "Info PM1 Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "pm1"
-      value_template: "{{value_json.pm1 | float}}"
+      value_template: "{{value_json.pm1 | float(0)}}"
       unique_id: pm1boxe+
 
     - name: "Info PM10 Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "pm10"
-      value_template: "{{value_json.pm10 | float}}"
+      value_template: "{{value_json.pm10 | float(0)}}"
       unique_id: pm10boxe+
 
     - name: "Info PM25 Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "pm25"
-      value_template: "{{value_json.pm25 | float}}"
+      value_template: "{{value_json.pm25 | float(0)}}"
       unique_id: pm25boxe+
 
     - name: "Info Pressure Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "pressure"
-      value_template: "{{value_json.pressure | float}}"
+      value_template: "{{value_json.pressure | float(0)}}"
       unique_id: pressboxe+
 
     - name: "Info Reduced Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "nitrous_oxide"
-      value_template: "{{value_json.reduced | float}}"
+      value_template: "{{value_json.reduced | float(0)}}"
       unique_id: redboxe+
 
     - name: "Info Temperature CPU Box Env+"
       state_topic: "Box-Garage/Bureau/Enviroplus"
       device_class: "temperature"
-      value_template: "{{value_json.cpu_temperature | float}}"
+      value_template: "{{value_json.cpu_temperature | float(0)}}"
       unique_id: tempcpuboxe+
 
     # ==========================
