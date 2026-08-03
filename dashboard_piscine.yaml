@@ -105,6 +105,8 @@ views:
                 name: Acide
               - entity: binary_sensor.piscine_bleach
                 name: Électrolyseur
+              - entity: switch.piscine_javel_hw
+                name: Javel
 
   - title: Historique
     path: historique
@@ -121,6 +123,8 @@ views:
                 name: État pompe
               - entity: switch.piscine_electrolyseur_hw
                 name: Électrolyseur
+              - entity: switch.piscine_javel_hw
+                name: Javel
               - entity: switch.piscine_ph_hw
                 name: Acide
               - entity: sensor.piscine_ph_mean
@@ -137,6 +141,8 @@ views:
                 name: État pompe
               - entity: switch.piscine_electrolyseur_hw
                 name: Électrolyseur
+              - entity: switch.piscine_javel_hw
+                name: Javel
               - entity: switch.piscine_ph_hw
                 name: Acide
               - entity: sensor.piscine_ph_mean
@@ -184,6 +190,20 @@ views:
                 name: Cellule (Lecture Seule)
               - entity: binary_sensor.piscine_lock_bleach
                 name: Verrouiller électrolyseur
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - label: Chlore Liquide (Javel)
+                type: section
+              - entity: sensor.piscine_javel_volume_ml
+                name: Volume (mL)
+              - entity: sensor.piscine_javel_run_duration
+                name: Durée d'injection (min)
+              - entity: switch.piscine_javel_hw
+                name: Pompe Javel
+              - entity: binary_sensor.piscine_lock_javel
+                name: Verrouiller Javel
+
 
   - title: Alertes
     path: alertes
@@ -203,6 +223,10 @@ views:
             name: Notifier niveau réservoir acide (l)
           - entity: sensor.piscine_notify_bleach_high
             name: Temps de marche maximal 48h (h)
+          - entity: sensor.piscine_javel_max_daily_vol
+            name: Limite journalière Javel (mL)
+          - entity: sensor.piscine_javel_max_daily_time
+            name: Limite journalière Javel (min)
 
   - title: Réglages
     path: reglages
@@ -248,7 +272,7 @@ views:
         type: entities
         show_header_toggle: false
         entities:
-          - label: Désinfection (électrolyseur au sel)
+          - label: Désinfection (Électrolyseur ou Javel)
             type: section
           - entity: sensor.piscine_fc_target
             name: Cible désinfection (ppm)
@@ -264,6 +288,10 @@ views:
             name: Durée marche cellule (min)
           - entity: sensor.piscine_e_fc_adjust
             name: Ajustement ±% désinfection
+          - entity: sensor.piscine_javel_pump_flow
+            name: Débit pompe Javel (ml/min)
+          - entity: sensor.piscine_javel_concentration
+            name: Concentration Javel (%)
           - label: pH
             type: section
           - entity: sensor.piscine_ph_target
