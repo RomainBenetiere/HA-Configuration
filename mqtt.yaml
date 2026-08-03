@@ -1,4 +1,3 @@
-# Declaration des sensors (equivalents virtuels jeedom) --> Envoi info de Jeedom vers HA
 sensor:
     - name: "Info Conso Box-Garage"
       state_topic: "Box-Garage/conso/puissance"
@@ -87,67 +86,257 @@ sensor:
       unique_id: tempcpuboxe+
 
     # ==========================
-    # CAPTEURS PISCINE (Valeurs)
-    # ==========================
-    - name: "Piscine Température de l'eau"
-      state_topic: "HAPiscine/sensor/pool_water_temperature/state"
-      unit_of_measurement: "°C"
-      device_class: temperature
-      state_class: measurement
-      unique_id: temp_piscine
+# CAPTEURS PISCINE (Nouveaux)
+# ==========================
+    - name: "Piscine Cummulated Flow Start"
+      state_topic: "ha/piscine/input_datetime/cummulated_flow_start/state"
+      unique_id: input_datetime_cummulated_flow_start_piscine
 
-    - name: "Piscine Température Brute"
-      state_topic: "HAPiscine/sensor/ezo_hw_temperature/state"
-      unit_of_measurement: "°C"
-      device_class: temperature
-      state_class: measurement
-      unique_id: tempbrute_piscine
+    - name: "Piscine Cycle Start"
+      state_topic: "ha/piscine/input_datetime/cycle_start/state"
+      unique_id: input_datetime_cycle_start_piscine
 
-    - name: "Piscine ORP (RedOx Lissée)"
-      state_topic: "HAPiscine/sensor/orp_mean/state"
-      unit_of_measurement: "mV"
-      state_class: measurement
-      unique_id: orp_piscine
+    - name: "Piscine Recirculation"
+      state_topic: "ha/piscine/input_datetime/recirculation/state"
+      unique_id: input_datetime_recirculation_piscine
 
-    - name: "Piscine pH (Lissé)"
-      state_topic: "HAPiscine/sensor/ph_mean/state"
-      state_class: measurement
-      unique_id: pH_piscine
+    - name: "Piscine Robot Cycle Start"
+      state_topic: "ha/piscine/input_datetime/robot_cycle_start/state"
+      unique_id: input_datetime_robot_cycle_start_piscine
 
-    - name: "Piscine FC Estimé"
-      state_topic: "HAPiscine/sensor/e_fc/state"
-      unit_of_measurement: "ppm"
-      state_class: measurement
-      unique_id: fc_piscine
+    - name: "Piscine Second Cycle Start"
+      state_topic: "ha/piscine/input_datetime/second_cycle_start/state"
+      unique_id: input_datetime_second_cycle_start_piscine
 
-    - name: "Piscine Saisie Manuelle FC"
-      state_topic: "HAPiscine/input_number/manual_fc/state"
-      unit_of_measurement: "ppm"
-      state_class: measurement
-      unique_id: manual_fc_piscine
+    - name: "Piscine Bleach Concentration"
+      state_topic: "ha/piscine/input_number/bleach_concentration/state"
+      unique_id: input_number_bleach_concentration_piscine
 
-    - name: "Piscine Date Mesure FC"
-      state_topic: "HAPiscine/input_datetime/manual_fc_date/state"
-      icon: mdi:calendar-clock
-      unique_id: date_fc_piscine
+    - name: "Piscine Bleach Inject"
+      state_topic: "ha/piscine/input_number/bleach_inject/state"
+      unique_id: input_number_bleach_inject_piscine
 
-    - name: "Piscine Cycles Restants"
-      state_topic: "HAPiscine/sensor/remain_cycles/state"
-      state_class: measurement
-      icon: mdi:sync
-      unique_id: cycles_restants_piscine
+    - name: "Piscine Bleach Speed"
+      state_topic: "ha/piscine/input_number/bleach_speed/state"
+      unique_id: input_number_bleach_speed_piscine
 
-    - name: "Piscine Niveau Cuve Acide"
-      state_topic: "HAPiscine/sensor/muriatic_tank/state"
-      unit_of_measurement: "L"
-      state_class: measurement
-      icon: mdi:barrel
-      unique_id: cuve_acide_piscine
+    - name: "Piscine Capacity"
+      state_topic: "ha/piscine/input_number/capacity/state"
+      unique_id: input_number_capacity_piscine
 
-    - name: "Piscine État du Cycle Actuel"
-      state_topic: "HAPiscine/sensor/pump_state/state"
-      icon: mdi:water-pump
-      unique_id: cycle_mode_piscine
+    - name: "Piscine Cycle"
+      state_topic: "ha/piscine/input_number/cycle/state"
+      unique_id: input_number_cycle_piscine
+
+    - name: "Piscine E Fc Adjust"
+      state_topic: "ha/piscine/input_number/e_fc_adjust/state"
+      unique_id: input_number_e_fc_adjust_piscine
+
+    - name: "Piscine Fc Target"
+      state_topic: "ha/piscine/input_number/fc_target/state"
+      unique_id: input_number_fc_target_piscine
+
+    - name: "Piscine Muriatic Concentration"
+      state_topic: "ha/piscine/input_number/muriatic_concentration/state"
+      unique_id: input_number_muriatic_concentration_piscine
+
+    - name: "Piscine Muriatic Inject"
+      state_topic: "ha/piscine/input_number/muriatic_inject/state"
+      unique_id: input_number_muriatic_inject_piscine
+
+    - name: "Piscine Muriatic Speed"
+      state_topic: "ha/piscine/input_number/muriatic_speed/state"
+      unique_id: input_number_muriatic_speed_piscine
+
+    - name: "Piscine Muriatic Tank"
+      state_topic: "ha/piscine/input_number/muriatic_tank/state"
+      unique_id: input_number_muriatic_tank_piscine
+
+    - name: "Piscine Notify Bleach High"
+      state_topic: "ha/piscine/input_number/notify_bleach_high/state"
+      unique_id: input_number_notify_bleach_high_piscine
+
+    - name: "Piscine Notify Cycles"
+      state_topic: "ha/piscine/input_number/notify_cycles/state"
+      unique_id: input_number_notify_cycles_piscine
+
+    - name: "Piscine Notify Muriatic High"
+      state_topic: "ha/piscine/input_number/notify_muriatic_high/state"
+      unique_id: input_number_notify_muriatic_high_piscine
+
+    - name: "Piscine Notify Muriatic Tank"
+      state_topic: "ha/piscine/input_number/notify_muriatic_tank/state"
+      unique_id: input_number_notify_muriatic_tank_piscine
+
+    - name: "Piscine Out Of Order"
+      state_topic: "ha/piscine/input_number/out_of_order/state"
+      unique_id: input_number_out_of_order_piscine
+
+    - name: "Piscine Javel Pump Flow"
+      state_topic: "ha/piscine/input_number/javel_pump_flow/state"
+      unique_id: input_number_javel_pump_flow_piscine
+
+    - name: "Piscine Javel Concentration"
+      state_topic: "ha/piscine/input_number/javel_concentration/state"
+      unique_id: input_number_javel_concentration_piscine
+
+    - name: "Piscine Javel Max Daily Vol"
+      state_topic: "ha/piscine/input_number/javel_max_daily_vol/state"
+      unique_id: input_number_javel_max_daily_vol_piscine
+
+    - name: "Piscine Javel Max Daily Time"
+      state_topic: "ha/piscine/input_number/javel_max_daily_time/state"
+      unique_id: input_number_javel_max_daily_time_piscine
+
+    - name: "Piscine Ph Target"
+      state_topic: "ha/piscine/input_number/ph_target/state"
+      unique_id: input_number_ph_target_piscine
+
+    - name: "Piscine Pump On For"
+      state_topic: "ha/piscine/input_number/pump_on_for/state"
+      unique_id: input_number_pump_on_for_piscine
+
+    - name: "Piscine Quality"
+      state_topic: "ha/piscine/input_number/quality/state"
+      unique_id: input_number_quality_piscine
+
+    - name: "Piscine Robot Solar Max Minutes"
+      state_topic: "ha/piscine/input_number/robot_solar_max_minutes/state"
+      unique_id: input_number_robot_solar_max_minutes_piscine
+
+    - name: "Piscine Second Cycle"
+      state_topic: "ha/piscine/input_number/second_cycle/state"
+      unique_id: input_number_second_cycle_piscine
+
+    - name: "Piscine Sim Orp"
+      state_topic: "ha/piscine/input_number/sim_orp/state"
+      unique_id: input_number_sim_orp_piscine
+
+    - name: "Piscine Sim Outdoor Temperature"
+      state_topic: "ha/piscine/input_number/sim_outdoor_temperature/state"
+      unique_id: input_number_sim_outdoor_temperature_piscine
+
+    - name: "Piscine Sim Ph"
+      state_topic: "ha/piscine/input_number/sim_ph/state"
+      unique_id: input_number_sim_ph_piscine
+
+    - name: "Piscine Sim Power Consumption"
+      state_topic: "ha/piscine/input_number/sim_power_consumption/state"
+      unique_id: input_number_sim_power_consumption_piscine
+
+    - name: "Piscine Sim Power Production"
+      state_topic: "ha/piscine/input_number/sim_power_production/state"
+      unique_id: input_number_sim_power_production_piscine
+
+    - name: "Piscine Sim Temperature"
+      state_topic: "ha/piscine/input_number/sim_temperature/state"
+      unique_id: input_number_sim_temperature_piscine
+
+    - name: "Piscine Turbo"
+      state_topic: "ha/piscine/input_number/turbo/state"
+      unique_id: input_number_turbo_piscine
+
+    - name: "Piscine Disinfection Mode"
+      state_topic: "ha/piscine/input_select/disinfection_mode/state"
+      unique_id: input_select_disinfection_mode_piscine
+
+    - name: "Piscine Pool Mode"
+      state_topic: "ha/piscine/input_select/pool_mode/state"
+      unique_id: input_select_pool_mode_piscine
+
+    - name: "Piscine Consommation Electrique"
+      state_topic: "ha/piscine/sensor/consommation_electrique/state"
+      unique_id: sensor_consommation_electrique_piscine
+
+    - name: "Piscine Cummulated Flow High"
+      state_topic: "ha/piscine/sensor/cummulated_flow_high/state"
+      unique_id: sensor_cummulated_flow_high_piscine
+
+    - name: "Piscine Cummulated Flow Low"
+      state_topic: "ha/piscine/sensor/cummulated_flow_low/state"
+      unique_id: sensor_cummulated_flow_low_piscine
+
+    - name: "Piscine Cycle Pool"
+      state_topic: "ha/piscine/sensor/cycle_pool/state"
+      unique_id: sensor_cycle_pool_piscine
+
+    - name: "Piscine Duree Marche Cellule"
+      state_topic: "ha/piscine/sensor/duree_marche_cellule/state"
+      unique_id: sensor_duree_marche_cellule_piscine
+
+    - name: "Piscine Duree Marche Cellule Effective"
+      state_topic: "ha/piscine/sensor/duree_marche_cellule_effective/state"
+      unique_id: sensor_duree_marche_cellule_effective_piscine
+
+    - name: "Piscine E Fc"
+      state_topic: "ha/piscine/sensor/e_fc/state"
+      unique_id: sensor_e_fc_piscine
+
+    - name: "Piscine Ezo Hw Orp"
+      state_topic: "ha/piscine/sensor/ezo_hw_orp/state"
+      unique_id: sensor_ezo_hw_orp_piscine
+
+    - name: "Piscine Ezo Hw Ph"
+      state_topic: "ha/piscine/sensor/ezo_hw_ph/state"
+      unique_id: sensor_ezo_hw_ph_piscine
+
+    - name: "Piscine Ezo Hw Temperature"
+      state_topic: "ha/piscine/sensor/ezo_hw_temperature/state"
+      unique_id: sensor_ezo_hw_temperature_piscine
+
+    - name: "Piscine Muriatic Tank"
+      state_topic: "ha/piscine/sensor/muriatic_tank/state"
+      unique_id: sensor_muriatic_tank_piscine
+
+    - name: "Piscine Net Power"
+      state_topic: "ha/piscine/sensor/net_power/state"
+      unique_id: sensor_net_power_piscine
+
+    - name: "Piscine Orp Mean"
+      state_topic: "ha/piscine/sensor/orp_mean/state"
+      unique_id: sensor_orp_mean_piscine
+
+    - name: "Piscine Ph Mean"
+      state_topic: "ha/piscine/sensor/ph_mean/state"
+      unique_id: sensor_ph_mean_piscine
+
+    - name: "Piscine Pool Water Temperature"
+      state_topic: "ha/piscine/sensor/pool_water_temperature/state"
+      unique_id: sensor_pool_water_temperature_piscine
+
+    - name: "Piscine Production Solaire"
+      state_topic: "ha/piscine/sensor/production_solaire/state"
+      unique_id: sensor_production_solaire_piscine
+
+    - name: "Piscine Pump State"
+      state_topic: "ha/piscine/sensor/pump_state/state"
+      unique_id: sensor_pump_state_piscine
+
+    - name: "Piscine Remain Cycles"
+      state_topic: "ha/piscine/sensor/remain_cycles/state"
+      unique_id: sensor_remain_cycles_piscine
+
+    - name: "Piscine Zlt 75 Run Duration"
+      state_topic: "ha/piscine/sensor/zlt_75_run_duration/state"
+      unique_id: sensor_zlt_75_run_duration_piscine
+
+    - name: "Piscine Javel On Last 24H"
+      state_topic: "ha/piscine/sensor/javel_on_last_24h/state"
+      unique_id: sensor_javel_on_last_24h_piscine
+
+    - name: "Piscine Javel Volume Ml"
+      state_topic: "ha/piscine/sensor/javel_volume_ml/state"
+      unique_id: sensor_javel_volume_ml_piscine
+
+    - name: "Piscine Javel Run Duration"
+      state_topic: "ha/piscine/sensor/javel_run_duration/state"
+      unique_id: sensor_javel_run_duration_piscine
+
+    - name: "Piscine Javel Vol Last 24H"
+      state_topic: "ha/piscine/sensor/javel_vol_last_24h/state"
+      unique_id: sensor_javel_vol_last_24h_piscine
+
+    
 
 binary_sensor:
 
@@ -166,48 +355,155 @@ binary_sensor:
       device_class: "Heat"
       unique_id: boxburrad
 
+    
     # ==========================
-    # ÉTATS LOGIQUES PISCINE
+# BINARY SENSORS PISCINE (Nouveaux)
     # ==========================
-    - name: "Piscine Relais Pompe (HW)"
-      state_topic: "HAPiscine/switch/pump_hw/state"
+    - name: "Piscine Bleach"
+      state_topic: "ha/piscine/binary_sensor/bleach/state"
       payload_on: "on"
       payload_off: "off"
-      icon: mdi:power-plug
-      unique_id: pump_hw_piscine
+      unique_id: binary_sensor_bleach_piscine
 
-    - name: "Piscine Relais Robot (HW)"
-      state_topic: "HAPiscine/switch/turbo_hw/state"
+    - name: "Piscine Flowd"
+      state_topic: "ha/piscine/binary_sensor/flowd/state"
       payload_on: "on"
       payload_off: "off"
-      icon: mdi:power-plug
-      unique_id: turbo_hw_piscine
+      unique_id: binary_sensor_flowd_piscine
 
-    - name: "Piscine Injection Acide (HW)"
-      state_topic: "HAPiscine/switch/ph_hw/state"
+    - name: "Piscine Muriatic"
+      state_topic: "ha/piscine/binary_sensor/muriatic/state"
       payload_on: "on"
       payload_off: "off"
-      icon: mdi:pump
-      unique_id: injecteur_acide_piscine
+      unique_id: binary_sensor_muriatic_piscine
 
-    - name: "Piscine Électrolyseur (HW)"
-      state_topic: "HAPiscine/switch/orp_hw/state"
+    - name: "Piscine Power Excess"
+      state_topic: "ha/piscine/binary_sensor/power_excess/state"
       payload_on: "on"
       payload_off: "off"
-      icon: mdi:lightning-bolt
-      unique_id: electrolyseur_piscine
+      unique_id: binary_sensor_power_excess_piscine
 
-    - name: "Piscine État Alerte Acide"
-      state_topic: "HAPiscine/binary_sensor/muriatic/state"
+    - name: "Piscine Power Shortage"
+      state_topic: "ha/piscine/binary_sensor/power_shortage/state"
       payload_on: "on"
       payload_off: "off"
-      device_class: problem
-      unique_id: alerte_acide_piscine
+      unique_id: binary_sensor_power_shortage_piscine
 
-    - name: "Piscine État Alerte Électrolyseur"
-      state_topic: "HAPiscine/binary_sensor/bleach/state"
+    - name: "Piscine Lock Bleach"
+      state_topic: "ha/piscine/input_boolean/lock_bleach/state"
       payload_on: "on"
       payload_off: "off"
-      device_class: problem
-      unique_id: alerte_electrolyseur_piscine
+      unique_id: input_boolean_lock_bleach_piscine
 
+    - name: "Piscine Lock Javel"
+      state_topic: "ha/piscine/input_boolean/lock_javel/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_lock_javel_piscine
+
+    - name: "Piscine Lock Muriatic"
+      state_topic: "ha/piscine/input_boolean/lock_muriatic/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_lock_muriatic_piscine
+
+    - name: "Piscine Notify Seasson"
+      state_topic: "ha/piscine/input_boolean/notify_seasson/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_notify_seasson_piscine
+
+    - name: "Piscine Robot Demarrage Solaire"
+      state_topic: "ha/piscine/input_boolean/robot_demarrage_solaire/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_robot_demarrage_solaire_piscine
+
+    - name: "Piscine Sim Flowd"
+      state_topic: "ha/piscine/input_boolean/sim_flowd/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_sim_flowd_piscine
+
+    - name: "Piscine Sim Orp Pump"
+      state_topic: "ha/piscine/input_boolean/sim_orp_pump/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_sim_orp_pump_piscine
+
+    - name: "Piscine Sim Ph Pump"
+      state_topic: "ha/piscine/input_boolean/sim_ph_pump/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_sim_ph_pump_piscine
+
+    - name: "Piscine Sim Pump"
+      state_topic: "ha/piscine/input_boolean/sim_pump/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_sim_pump_piscine
+
+    - name: "Piscine Sim Turbo"
+      state_topic: "ha/piscine/input_boolean/sim_turbo/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_sim_turbo_piscine
+
+    - name: "Piscine Simulation Mode"
+      state_topic: "ha/piscine/input_boolean/simulation_mode/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_simulation_mode_piscine
+
+    - name: "Piscine Turbo"
+      state_topic: "ha/piscine/input_boolean/turbo/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: input_boolean_turbo_piscine
+
+    - name: "Piscine Javel"
+      state_topic: "ha/piscine/binary_sensor/javel/state"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: binary_sensor_javel_piscine
+
+    
+
+switch:
+    # ==========================
+# SWITCHES PISCINE (Nouveaux)
+    # ==========================
+    - name: "Piscine Electrolyseur Hw"
+      state_topic: "ha/piscine/switch/electrolyseur_hw/state"
+      command_topic: "ha/piscine/switch/electrolyseur_hw/set"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: switch_electrolyseur_hw_piscine
+
+    - name: "Piscine Ph Hw"
+      state_topic: "ha/piscine/switch/ph_hw/state"
+      command_topic: "ha/piscine/switch/ph_hw/set"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: switch_ph_hw_piscine
+
+    - name: "Piscine Pump Hw"
+      state_topic: "ha/piscine/switch/pump_hw/state"
+      command_topic: "ha/piscine/switch/pump_hw/set"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: switch_pump_hw_piscine
+
+    - name: "Piscine Turbo Hw"
+      state_topic: "ha/piscine/switch/turbo_hw/state"
+      command_topic: "ha/piscine/switch/turbo_hw/set"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: switch_turbo_hw_piscine
+
+    - name: "Piscine Javel Hw"
+      state_topic: "ha/piscine/switch/javel_hw/state"
+      command_topic: "ha/piscine/switch/javel_hw/set"
+      payload_on: "on"
+      payload_off: "off"
+      unique_id: switch_javel_hw_piscine
