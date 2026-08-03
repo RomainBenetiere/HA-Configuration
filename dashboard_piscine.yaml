@@ -4,15 +4,15 @@ views:
     icon: 'mdi:pool'
     badges:
       - entity: weather.forecast_maison
-      - entity: sensor.piscine_fc_estime
-      - entity: sensor.piscine_etat_du_cycle_actuel
+      - entity: sensor.piscine_e_fc
+      - entity: sensor.piscine_pump_state
     cards:
       - type: vertical-stack
         cards:
           - type: horizontal-stack
             cards:
               - type: gauge
-                entity: sensor.piscine_temperature_de_l_eau
+                entity: sensor.piscine_pool_water_temperature
                 name: temp
                 min: 15
                 max: 35
@@ -22,7 +22,7 @@ views:
                   yellow: 31
                   red: 33
               - type: gauge
-                entity: sensor.piscine_ph_lisse
+                entity: sensor.piscine_ph_mean
                 name: ph
                 min: 6.0
                 max: 8
@@ -32,7 +32,7 @@ views:
                   yellow: 7.35
                   red: 7.75
               - type: gauge
-                entity: sensor.piscine_orp_redox_lissee
+                entity: sensor.piscine_orp_mean
                 name: orp
                 min: -1999
                 max: 1999
@@ -42,11 +42,22 @@ views:
                   yellow: 600
                   red: 800
 
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.pool_evap_rate_cm_j
+            name: Pool Evap Rate cm_j
+            line_color: orange
+            show:
+              labels: false
+              name: true
+              icon: true
+              state: true
+
           - type: glance
             show_name: false
             show_state: true
             entities:
-              - entity: sensor.piscine_temperature_brute
+              - entity: sensor.piscine_ezo_hw_temperature
 
           - type: entities
             title: Mesure Manuelle (FC)
@@ -61,7 +72,7 @@ views:
             title: Fournitures
             cards:
               - type: gauge
-                entity: sensor.piscine_cycles_restants
+                entity: sensor.piscine_remain_cycles
                 name: Cycles restants
                 min: 0
                 max: 200
@@ -71,7 +82,7 @@ views:
                   yellow: 10
                   red: 5
               - type: gauge
-                entity: sensor.piscine_niveau_cuve_acide
+                entity: sensor.piscine_muriatic_tank
                 name: Cuve acide
                 min: 0
                 max: 30
@@ -86,13 +97,13 @@ views:
             show_state: false
             show_icon: true
             entities:
-              - entity: binary_sensor.piscine_relais_pompe_hw
+              - entity: switch.piscine_pump_hw
                 name: Pompe
-              - entity: binary_sensor.piscine_relais_robot_hw
+              - entity: switch.piscine_turbo_hw
                 name: Robot
-              - entity: binary_sensor.piscine_etat_alerte_acide
+              - entity: binary_sensor.piscine_muriatic
                 name: Acide
-              - entity: binary_sensor.piscine_etat_alerte_electrolyseur
+              - entity: binary_sensor.piscine_bleach
                 name: Électrolyseur
 
   - title: Historique
@@ -106,33 +117,33 @@ views:
             type: history-graph
             hours_to_show: 3
             entities:
-              - entity: sensor.piscine_etat_du_cycle_actuel
+              - entity: sensor.piscine_pump_state
                 name: État pompe
-              - entity: binary_sensor.piscine_electrolyseur_hw
+              - entity: switch.piscine_electrolyseur_hw
                 name: Électrolyseur
-              - entity: binary_sensor.piscine_injection_acide_hw
+              - entity: switch.piscine_ph_hw
                 name: Acide
-              - entity: sensor.piscine_ph_lisse
+              - entity: sensor.piscine_ph_mean
                 name: pH
-              - entity: sensor.piscine_orp_redox_lissee
+              - entity: sensor.piscine_orp_mean
                 name: ORP
-              - entity: sensor.piscine_temperature_de_l_eau
+              - entity: sensor.piscine_pool_water_temperature
                 name: Temp. eau
           - title: 3 Derniers jours
             type: history-graph
             hours_to_show: 72
             entities:
-              - entity: sensor.piscine_etat_du_cycle_actuel
+              - entity: sensor.piscine_pump_state
                 name: État pompe
-              - entity: binary_sensor.piscine_electrolyseur_hw
+              - entity: switch.piscine_electrolyseur_hw
                 name: Électrolyseur
-              - entity: binary_sensor.piscine_injection_acide_hw
+              - entity: switch.piscine_ph_hw
                 name: Acide
-              - entity: sensor.piscine_ph_lisse
+              - entity: sensor.piscine_ph_mean
                 name: pH
-              - entity: sensor.piscine_orp_redox_lissee
+              - entity: sensor.piscine_orp_mean
                 name: ORP
-              - entity: sensor.piscine_temperature_de_l_eau
+              - entity: sensor.piscine_pool_water_temperature
                 name: Temp. eau
 
   - title: Chimie
@@ -146,118 +157,118 @@ views:
             entities:
               - label: Acide ( - pH )
                 type: section
-              - entity: sensor.piscine_niveau_cuve_acide
+              - entity: sensor.piscine_muriatic_tank
                 name: Niveau cuve
-              - entity: input_number.muriatic_concentration
-                name: Concentration (Non synchronisé MQTT)
-              - entity: input_number.muriatic_speed
-                name: Débit injection (Non synchronisé MQTT)
-              - entity: binary_sensor.piscine_injection_acide_hw
+              - entity: sensor.piscine_muriatic_concentration
+                name: Concentration
+              - entity: sensor.piscine_muriatic_speed
+                name: Débit injection
+              - entity: switch.piscine_ph_hw
                 name: Pompe injection (Lecture Seule)
-              - entity: input_boolean.lock_muriatic
-                name: Verrouiller pompe (Non synchronisé MQTT)
+              - entity: binary_sensor.piscine_lock_muriatic
+                name: Verrouiller pompe
           - type: entities
             show_header_toggle: false
             entities:
               - label: Électrolyseur au sel (ORP)
                 type: section
-              - entity: input_number.bleach_concentration
-                name: Rendement cellule (%) (Non synchronisé MQTT)
-              - entity: input_number.bleach_speed
-                name: Débit de génération (g/h) (Non synchronisé MQTT)
-              - entity: sensor.duree_marche_cellule
-                name: Durée de marche (prochaine) (Non synchronisé MQTT)
-              - entity: sensor.duree_marche_cellule_effective
-                name: Temps de marche pris en compte (min) (Non synchronisé MQTT)
-              - entity: binary_sensor.piscine_electrolyseur_hw
+              - entity: sensor.piscine_bleach_concentration
+                name: Rendement cellule (%)
+              - entity: sensor.piscine_bleach_speed
+                name: Débit de génération (g/h)
+              - entity: sensor.piscine_duree_marche_cellule
+                name: Durée de marche (prochaine)
+              - entity: sensor.piscine_duree_marche_cellule_effective
+                name: Temps de marche pris en compte (min)
+              - entity: switch.piscine_electrolyseur_hw
                 name: Cellule (Lecture Seule)
-              - entity: input_boolean.lock_bleach
-                name: Verrouiller électrolyseur (Non synchronisé MQTT)
+              - entity: binary_sensor.piscine_lock_bleach
+                name: Verrouiller électrolyseur
 
   - title: Alertes
     path: alertes
     icon: 'mdi:message-alert'
     cards:
-      - title: Notifications (Variables manquantes)
+      - title: Notifications
         type: entities
         show_header_toggle: false
         entities:
-          - entity: input_number.notify_cycles
+          - entity: sensor.piscine_notify_cycles
             name: Alerte cycles filtration
-          - entity: input_boolean.notify_seasson
+          - entity: binary_sensor.piscine_notify_seasson
             name: Alertes changement de saison
-          - entity: input_number.notify_muriatic_high
+          - entity: sensor.piscine_notify_muriatic_high
             name: Notifier niveau élevé acide 48h (l/48h)
-          - entity: input_number.notify_muriatic_tank
+          - entity: sensor.piscine_notify_muriatic_tank
             name: Notifier niveau réservoir acide (l)
-          - entity: input_number.notify_bleach_high
+          - entity: sensor.piscine_notify_bleach_high
             name: Temps de marche maximal 48h (h)
 
   - title: Réglages
     path: reglages
     icon: 'mdi:tune'
     cards:
-      - title: Réglages piscine (Variables manquantes)
+      - title: Réglages piscine
         theme: default
         type: entities
         show_header_toggle: false
         entities:
           - label: Piscine
             type: section
-          - entity: input_number.capacity
+          - entity: sensor.piscine_capacity
             name: Capacité
-          - entity: input_number.quality
+          - entity: sensor.piscine_quality
             name: Qualité
-          - entity: input_datetime.recirculation
+          - entity: sensor.piscine_recirculation
             name: Renouvellement
           - label: Robot (saisie directe)
             type: section
-          - entity: input_boolean.turbo
+          - entity: binary_sensor.piscine_turbo
             name: Robot de nettoyage
-          - entity: input_boolean.robot_demarrage_solaire
+          - entity: binary_sensor.piscine_robot_demarrage_solaire
             name: Robot démarrage sur solaire
-          - entity: input_number.turbo
+          - entity: sensor.piscine_turbo
             name: "% du cycle avec robot"
-          - entity: input_datetime.robot_cycle_start
+          - entity: sensor.piscine_robot_cycle_start
             name: Heure démarrage robot
-          - entity: input_number.robot_solar_max_minutes
+          - entity: sensor.piscine_robot_solar_max_minutes
             name: Temps max robot solaire (min)
           - label: Filtre
             type: section
-          - entity: input_datetime.cycle_start
+          - entity: sensor.piscine_cycle_start
             name: Heure 1er cycle
-          - entity: input_datetime.second_cycle_start
+          - entity: sensor.piscine_second_cycle_start
             name: Heure 2ᵉ cycle
-          - entity: input_number.second_cycle
-          - entity: sensor.piscine_etat_du_cycle_actuel
+          - entity: sensor.piscine_second_cycle
+          - entity: sensor.piscine_pump_state
             name: Cycle actuel (MQTT)
-          - entity: input_number.cycle
+          - entity: sensor.piscine_cycle
 
-      - title: Réglages chimie (Variables manquantes)
+      - title: Réglages chimie
         type: entities
         show_header_toggle: false
         entities:
           - label: Désinfection (électrolyseur au sel)
             type: section
-          - entity: input_number.fc_target
+          - entity: sensor.piscine_fc_target
             name: Cible désinfection (ppm)
-          - entity: sensor.piscine_fc_estime
+          - entity: sensor.piscine_e_fc
             name: Désinfection actuelle (ppm)
-          - entity: input_select.pool_mode
+          - entity: sensor.piscine_pool_mode
             name: Mode désinfection ZLT 75
-          - entity: sensor.zlt_75_run_duration
+          - entity: sensor.piscine_zlt_75_run_duration
             name: Durée calculée ZLT 75 (min)
-          - entity: input_number.bleach_inject
+          - entity: sensor.piscine_bleach_inject
             name: Quantité à produire (g)
-          - entity: sensor.duree_marche_cellule
+          - entity: sensor.piscine_duree_marche_cellule
             name: Durée marche cellule (min)
-          - entity: input_number.e_fc_adjust
+          - entity: sensor.piscine_e_fc_adjust
             name: Ajustement ±% désinfection
           - label: pH
             type: section
-          - entity: input_number.ph_target
+          - entity: sensor.piscine_ph_target
             name: Cible pH
-          - entity: sensor.piscine_ph_lisse
+          - entity: sensor.piscine_ph_mean
             name: pH actuel
-          - entity: input_number.muriatic_inject
+          - entity: sensor.piscine_muriatic_inject
             name: Prochaine injection acide (ml)
