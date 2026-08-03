@@ -9,12 +9,13 @@ entity.
 """
 from typing import List, Optional, Callable, Any
 import logging
+from vtherm_api.log_collector import get_vtherm_logger
 
 from homeassistant.core import HomeAssistant, State
 from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.helpers.event import async_track_state_change_event
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER = get_vtherm_logger(__name__)
 
 
 class UnknownEntity(Exception):
@@ -77,6 +78,13 @@ class UnderlyingStateManager:
         """Return the last known `State` for `entity_id`, or `None` if unknown."""
         idx = self._index_of(entity_id)
         if idx is None:
+            state = self._hass.states.get(entity_id)
+            if state is not None:
+                _LOGGER.debug(
+                    "UnderlyingStateManager - Requested state for unknown entity_id: %s, found in HA",
+                    entity_id,
+                )
+                return state
             _LOGGER.error("UnderlyingStateManager - Requested state for unknown entity_id: %s", entity_id)
             return None
         return self._states[idx]

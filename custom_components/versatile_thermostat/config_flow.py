@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Any
 import re
-import logging
+from vtherm_api.log_collector import get_vtherm_logger
 import copy
 from collections.abc import Mapping  # pylint: disable=import-error
 import voluptuous as vol
@@ -22,12 +22,14 @@ from homeassistant.data_entry_flow import FlowHandler, FlowResult
 
 from .const import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from .config_schema import *  # pylint: disable=wildcard-import, unused-wildcard-import
-from .vtherm_api import VersatileThermostatAPI
+from .vtherm_central_api import VersatileThermostatAPI
 from .commons import check_and_extract_service_configuration
 
 COMES_FROM = "comes_from"
+PLUGINS_LINK_PLACEHOLDER = "plugins_link"
+PLUGINS_LINK = "[plugins](https://www.versatile-thermostat.org/en/plugins/)"
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER = get_vtherm_logger(__name__)
 
 def add_suggested_values_to_schema(
     data_schema: vol.Schema, suggested_values: Mapping[str, Any]
@@ -56,15 +58,15 @@ class VersatileThermostatBaseConfigFlow(FlowHandler):
     VERSION = CONFIG_VERSION
     MINOR_VERSION = CONFIG_MINOR_VERSION
 
-    _placeholders = {
-        CONF_NAME: "",
-    }
-
     def __init__(self, infos) -> None:
         super().__init__()
         _LOGGER.debug("CTOR BaseConfigFlow infos: %s", infos)
         self._infos: dict = infos
         self._learning_type_changed = False
+        self._placeholders = {
+            CONF_NAME: "",
+            PLUGINS_LINK_PLACEHOLDER: PLUGINS_LINK,
+        }
 
         # VTherm API should have been initialized before arriving here
         vtherm_api = VersatileThermostatAPI.get_vtherm_api()
@@ -534,9 +536,28 @@ class VersatileThermostatBaseConfigFlow(FlowHandler):
         """Handle the flow steps"""
         _LOGGER.debug("Into ConfigFlow.async_step_user user_input=%s", user_input)
 
-        return await self.generic_step(
-            "user", STEP_USER_DATA_SCHEMA, user_input, self.async_step_menu
-        )
+        # Always do a fresh lookup (not from __init__ cache) to handle same-session deletions
+        vtherm_api = VersatileThermostatAPI.get_vtherm_api()
+        central_config = vtherm_api.find_central_configuration() if vtherm_api else None
+
+        # Exclude the central config type if one already exists (it must be unique)
+        if central_config is not None:
+            available_types = [t for t in CONF_THERMOSTAT_TYPES if t != CONF_THERMOSTAT_CENTRAL_CONFIG]
+            schema = vol.Schema(
+                {
+                    vol.Required(CONF_THERMOSTAT_TYPE, default=CONF_THERMOSTAT_SWITCH): selector.SelectSelector(
+                        selector.SelectSelectorConfig(
+                            options=available_types,
+                            translation_key="thermostat_type",
+                            mode="list",
+                        )
+                    )
+                }
+            )
+        else:
+            schema = STEP_USER_DATA_SCHEMA
+
+        return await self.generic_step("user", schema, user_input, self.async_step_menu)
 
     async def async_step_configuration_not_complete(
         self, user_input: dict | None = None
@@ -705,11 +726,11 @@ class VersatileThermostatBaseConfigFlow(FlowHandler):
 
         if self._infos[CONF_THERMOSTAT_TYPE] == CONF_THERMOSTAT_SWITCH:
             return await self.generic_step(
-                "type", STEP_THERMOSTAT_SWITCH, user_input, self.async_step_menu
+                "type", build_step_thermostat_switch_schema(), user_input, self.async_step_menu
             )
         elif self._infos[CONF_THERMOSTAT_TYPE] == CONF_THERMOSTAT_VALVE:
             return await self.generic_step(
-                "type", STEP_THERMOSTAT_VALVE, user_input, self.async_step_menu
+                "type", build_step_thermostat_valve_schema(), user_input, self.async_step_menu
             )
         else:
             return await self.generic_step(
@@ -756,7 +777,7 @@ class VersatileThermostatBaseConfigFlow(FlowHandler):
             "Into ConfigFlow.async_step_valve_regulation user_input=%s", user_input
         )
 
-        schema = STEP_VALVE_REGULATION
+        schema = build_step_valve_regulation_schema()
         self._infos[COMES_FROM] = None
         next_step = self.async_step_menu
 
@@ -1281,6 +1302,7 @@ class VersatileThermostatOptionsFlowHandler(
 
         self._placeholders = {
             CONF_NAME: self._infos[CONF_NAME],
+            PLUGINS_LINK_PLACEHOLDER: PLUGINS_LINK,
         }
 
         return await self.async_step_menu(user_input)

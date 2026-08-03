@@ -16,6 +16,10 @@ from homeassistant.components.climate.const import ClimateEntityFeature  # pylin
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util import dt as dt_util
 
+
+from vtherm_api.const import DOMAIN, VTHERM_API_NAME, DEVICE_MANUFACTURER, DEVICE_MODEL, get_tz, NowClass, EventType
+from vtherm_api.log_collector import get_vtherm_logger
+
 PROPORTIONAL_FUNCTION_TPI = "tpi"
 
 from .vtherm_preset import VThermPreset, VThermPresetWithAC, VThermPresetWithAway, VThermPresetWithACAway, PRESET_TEMP_SUFFIX, PRESET_AWAY_SUFFIX  # pylint: disable=unused-import
@@ -34,7 +38,7 @@ from .vtherm_hvac_mode import (
 )  # pylint: disable=unused-import
 from .vtherm_state import VThermState  # pylint: disable=unused-import
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER = get_vtherm_logger(__name__)
 
 CONFIG_VERSION = 2
 CONFIG_MINOR_VERSION = 3
@@ -143,6 +147,9 @@ CONF_FAILURE_DETECTION_ENABLE_TEMPLATE = "failure_detection_enable_template"
 CONF_LOCK_CODE = "lock_code"
 CONF_LOCK_USERS = "lock_users"
 CONF_LOCK_AUTOMATIONS = "lock_automations"
+CONF_AUTO_RELOCK_SEC = "auto_relock_sec"
+
+CONF_REPAIR_INCORRECT_STATE = "repair_incorrect_state"
 
 CONF_VSWITCH_ON_CMD_LIST = "vswitch_on_command"
 CONF_VSWITCH_OFF_CMD_LIST = "vswitch_off_command"
@@ -192,6 +199,7 @@ CONF_AUTO_TPI_CONTINUOUS_KEXT_ALPHA = "auto_tpi_continuous_kext_alpha"
 CONF_SHORT_EMA_PARAMS = "short_ema_params"
 CONF_SAFETY_MODE = "safety_mode"
 CONF_MAX_ON_PERCENT = "max_on_percent"
+CONF_LOG_BUFFER_MAX_AGE_HOURS = "log_buffer_max_age_hours"
 
 CONF_USE_MAIN_CENTRAL_CONFIG = "use_main_central_config"
 CONF_USE_TPI_CENTRAL_CONFIG = "use_tpi_central_config"
@@ -208,6 +216,7 @@ CONF_USE_CENTRAL_MODE = "use_central_mode"
 CONF_CENTRAL_BOILER_ACTIVATION_SRV = "central_boiler_activation_service"
 CONF_CENTRAL_BOILER_DEACTIVATION_SRV = "central_boiler_deactivation_service"
 CONF_CENTRAL_BOILER_ACTIVATION_DELAY_SEC = "central_boiler_activation_delay_sec"
+CONF_KEEP_ALIVE_BOILER_DELAY_SEC = "keep_alive_boiler_delay_sec"
 
 CONF_USED_BY_CENTRAL_BOILER = "used_by_controls_central_boiler"
 CONF_WINDOW_ACTION = "window_action"
@@ -374,6 +383,7 @@ ALL_CONF = (
         CONF_CENTRAL_BOILER_ACTIVATION_SRV,
         CONF_CENTRAL_BOILER_DEACTIVATION_SRV,
         CONF_CENTRAL_BOILER_ACTIVATION_DELAY_SEC,
+        CONF_KEEP_ALIVE_BOILER_DELAY_SEC,
         CONF_WINDOW_ACTION,
         CONF_STEP_TEMPERATURE,
         CONF_MIN_OPENING_DEGREES,
@@ -399,6 +409,7 @@ ALL_CONF = (
         CONF_HEATING_FAILURE_DETECTION_DELAY,
         CONF_TEMPERATURE_CHANGE_TOLERANCE,
         CONF_FAILURE_DETECTION_ENABLE_TEMPLATE,
+        CONF_REPAIR_INCORRECT_STATE,
     ]
     + CONF_PRESETS_VALUES
     + CONF_PRESETS_AWAY_VALUES
@@ -464,12 +475,22 @@ SERVICE_UNLOCK = "unlock"
 SERVICE_SET_TPI_PARAMETERS = "set_tpi_parameters"
 SERVICE_SET_AUTO_TPI_MODE = "set_auto_tpi_mode"
 SERVICE_AUTO_TPI_CALIBRATE_CAPACITY = "auto_tpi_calibrate_capacity"
+AUTO_TPI_EVENT = "versatile_thermostat_auto_tpi_event"
 SERVICE_SET_TIMED_PRESET = "set_timed_preset"
 SERVICE_CANCEL_TIMED_PRESET = "cancel_timed_preset"
 SERVICE_RECALIBRATE_VALVES = "recalibrate_valves"
+SERVICE_DOWNLOAD_LOGS = "download_logs"
 
 DEFAULT_SAFETY_MIN_ON_PERCENT = 0.5
 DEFAULT_SAFETY_DEFAULT_ON_PERCENT = 0.1
+
+# Repair incorrect state defaults
+DEFAULT_REPAIR_INCORRECT_STATE = False
+REPAIR_MAX_ATTEMPTS = 5
+REPAIR_MIN_DELAY_AFTER_INIT_SEC = 30
+
+# Central boiler keep-alive defaults
+DEFAULT_KEEP_ALIVE_BOILER_DELAY_SEC = 0
 
 # Heating failure detection defaults
 DEFAULT_HEATING_FAILURE_THRESHOLD = 0.9  # 90%
@@ -580,23 +601,6 @@ class RegulationParamVeryStrong:
     accumulated_error_threshold: float = 80
     overheat_protection: bool = True
 
-
-class EventType(Enum):
-    """The event type that can be sent"""
-
-    SAFETY_EVENT = "versatile_thermostat_safety_event"
-    POWER_EVENT = "versatile_thermostat_power_event"
-    TEMPERATURE_EVENT = "versatile_thermostat_temperature_event"
-    HVAC_MODE_EVENT = "versatile_thermostat_hvac_mode_event"
-    CENTRAL_BOILER_EVENT = "versatile_thermostat_central_boiler_event"
-    PRESET_EVENT = "versatile_thermostat_preset_event"
-    WINDOW_AUTO_EVENT = "versatile_thermostat_window_auto_event"
-    AUTO_START_STOP_EVENT = "versatile_thermostat_auto_start_stop_event"
-    AUTO_TPI_EVENT = "versatile_thermostat_auto_tpi_event"
-    TIMED_PRESET_EVENT = "versatile_thermostat_timed_preset_event"
-    HEATING_FAILURE_EVENT = "versatile_thermostat_heating_failure_event"
-
-
 def send_vtherm_event(hass, event_type: EventType, entity, data: dict):
     """Send an event"""
     _LOGGER.info("%s - Sending event %s with data: %s", entity, event_type, data)
@@ -622,24 +626,6 @@ def get_safe_float_value(value):
         return None if math.isinf(float_val) or not math.isfinite(float_val) else float_val
     except (ValueError, TypeError):
         return None
-
-
-def get_tz(hass: HomeAssistant):
-    """Get the current timezone"""
-
-    return dt_util.get_time_zone(hass.config.time_zone)
-
-
-class NowClass:
-    """For testing purpose only"""
-
-    @staticmethod
-    def get_now(hass: HomeAssistant) -> datetime:
-        """A test function to get the now.
-        For testing purpose this method can be overriden to get a specific
-        timestamp.
-        """
-        return datetime.now(get_tz(hass))
 
 
 class UnknownEntity(HomeAssistantError):

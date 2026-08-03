@@ -1,16 +1,17 @@
 """ Implements a base Feature Manager for Versatile Thermostat """
 
-import logging
 from typing import Any
 
 from homeassistant.core import CALLBACK_TYPE, HomeAssistant
+
+from vtherm_api.log_collector import get_vtherm_logger
 
 from .const import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from .commons_type import ConfigData
 
 from .config_schema import *  # pylint: disable=wildcard-import, unused-wildcard-import
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER = get_vtherm_logger(__name__)
 
 
 class BaseFeatureManager:
@@ -63,3 +64,8 @@ class BaseFeatureManager:
     def hass(self) -> HomeAssistant:
         """The HA instance"""
         return self._hass
+
+    @property
+    def is_detected(self) -> bool:
+        """True if the FeatureManager is detected. Should be implemented by the child class"""
+        raise NotImplementedError()

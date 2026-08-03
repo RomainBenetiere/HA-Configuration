@@ -25,7 +25,10 @@ class XCover(XEntity, CoverEntity):
 
     def __init__(self, ewelink: XRegistry, device: dict):
         XEntity.__init__(self, ewelink, device)
-        self._attr_device_class = DEVICE_CLASSES.get(device.get("device_class"))
+        # Fix device_class for multi-channel device UIID 211
+        # https://github.com/AlexxIT/SonoffLAN/pull/1785
+        if (v := device.get("device_class")) and isinstance(v, str):
+            self._attr_device_class = DEVICE_CLASSES.get(v)
 
     def set_state(self, params: dict):
         # => command to cover from mobile app
@@ -74,6 +77,45 @@ class XCover(XEntity, CoverEntity):
         params = {"setclose": 100 - position}
         self.set_state(params)
         self._async_write_ha_state()
+        await self.ewelink.send(self.device, params, query_cloud=False)
+
+
+class XZBCover(XCover):
+    def internal_set_position(self, value: int):
+        self._attr_current_cover_position = 100 - value
+        self._attr_is_closed = self.current_cover_position == 0
+        self._attr_is_closing = self._attr_is_opening = False
+
+    def internal_set_motion(self, value: str):
+        self._attr_is_closing = value == "off"
+        self._attr_is_opening = value == "on"
+
+    def set_state(self, params: dict):
+        # device init
+        if "setclose" in params and "switch" in params:
+            self.internal_set_position(params["setclose"])
+            return
+
+        # check if this is command from mobile app
+        if self.device.get("cloud_seq"):
+            return
+
+        if "setclose" in params:
+            self.internal_set_position(params["setclose"])
+        elif "switch" in params:
+            self.internal_set_motion(params["switch"])
+
+    async def async_stop_cover(self, **kwargs):
+        await self.ewelink.send(self.device, {"switch": "pause"}, query_cloud=False)
+
+    async def async_open_cover(self, **kwargs):
+        await self.ewelink.send(self.device, {"switch": "on"}, query_cloud=False)
+
+    async def async_close_cover(self, **kwargs):
+        await self.ewelink.send(self.device, {"switch": "off"}, query_cloud=False)
+
+    async def async_set_cover_position(self, position: int, **kwargs):
+        params = {"setclose": 100 - position}
         await self.ewelink.send(self.device, params, query_cloud=False)
 
 
