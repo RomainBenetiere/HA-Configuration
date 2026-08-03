@@ -14,10 +14,11 @@ binary_sensor: !include bin_sensor.yaml
 input_boolean: !include input_boolean.yaml
 # switch: !include switches.yaml
 input_number: !include input_number.yaml
-statistics: statistics.yaml
-history_stats: history_stats.yaml
-filter: filter.yaml
+# statistics: statistics.yaml
+# history_stats: history_stats.yaml
+# filter: filter.yaml
 
+template: !include template.yaml
 switch:
   - platform: rfxtrx
     automatic_add: false
