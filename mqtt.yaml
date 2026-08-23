@@ -270,6 +270,8 @@ sensor:
 
     - name: "Piscine E Fc"
       state_topic: "ha/piscine/sensor/e_fc/state"
+      unit_of_measurement: "ppm"
+      state_class: measurement
       unique_id: sensor_e_fc_piscine
 
     - name: "Piscine Ezo Hw Orp"
@@ -282,10 +284,16 @@ sensor:
 
     - name: "Piscine Ezo Hw Temperature"
       state_topic: "ha/piscine/sensor/ezo_hw_temperature/state"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
       unique_id: sensor_ezo_hw_temperature_piscine
 
     - name: "Piscine Muriatic Tank"
       state_topic: "ha/piscine/sensor/muriatic_tank/state"
+      unit_of_measurement: "L"
+      device_class: volume
+      state_class: measurement
       unique_id: sensor_muriatic_tank_piscine
 
     - name: "Piscine Net Power"
@@ -294,14 +302,20 @@ sensor:
 
     - name: "Piscine Orp Mean"
       state_topic: "ha/piscine/sensor/orp_mean/state"
+      unit_of_measurement: "mV"
+      state_class: measurement
       unique_id: sensor_orp_mean_piscine
 
     - name: "Piscine Ph Mean"
       state_topic: "ha/piscine/sensor/ph_mean/state"
+      state_class: measurement
       unique_id: sensor_ph_mean_piscine
 
     - name: "Piscine Pool Water Temperature"
       state_topic: "ha/piscine/sensor/pool_water_temperature/state"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
       unique_id: sensor_pool_water_temperature_piscine
 
     - name: "Piscine Production Solaire"
